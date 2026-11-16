@@ -1,0 +1,377 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    color: #0f172a;
+}
+
+.login-form {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+}
+
+/* ========================================================
+   LEFT BRANDING PANEL (CLEAN MODERN ROYAL BLUE GRADIENT)
+   ======================================================== */
+.login-form .left {
+    width: 42%;
+    min-height: 100vh;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 35%, rgba(59, 130, 246, 0.25) 0%, transparent 60%),
+        linear-gradient(160deg, #091224 0%, #0d2352 50%, #1d4ed8 100%);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-form .left-center-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 440px;
+    z-index: 2;
+    margin: auto 0;
+}
+
+.login-form .left-brand-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 26px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.login-form .left-brand-card:hover {
+    transform: translateY(-2px);
+
+}
+
+.login-form .left-logo-img {
+    width: 500px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: contain;
+    display: block;
+
+}
+
+.login-form .left-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 440px;
+    gap: 14px;
+}
+
+.login-form .left-content h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+}
+
+.login-form .left-content h2 span {
+    color: #60a5fa;
+    text-shadow: 0 0 20px rgba(96, 165, 250, 0.35);
+}
+
+.login-form .left-desc {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #cbd5e1;
+    margin-bottom: 0;
+}
+
+.login-form .left-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    text-align: left;
+}
+
+.login-form .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    color: #e2e8f0;
+}
+
+.login-form .check-dot {
+    width: 24px;
+    height: 24px;
+    background: #1e3a8a;
+    color: #60a5fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.login-form .left-footer-quote {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    color: rgba(203, 213, 225, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+/* ========================================================
+   RIGHT FORM PANEL
+   ======================================================== */
+.login-form .right {
+    width: 58%;
+    min-height: 100vh;
+    padding: 40px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.login-form .right .head,
+.login-form .right .form {
+    width: 100%;
+    max-width: 440px;
+}
+
+.login-form .right .head {
+    margin-bottom: 24px;
+}
+
+.login-form .right .head h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+}
+
+.login-form .right .head h5 {
+    font-size: 14px;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.login-error-banner {
+    width: 100%;
+    max-width: 440px;
+    background-color: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.login-form .right .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.login-form .right .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login-form .right .form-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.login-form .right .form input[type="email"],
+.login-form .right .form input[type="password"] {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.login-form .right .form input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.login-form .right .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0;
+}
+
+.login-form .right .leftitem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.login-form .right .leftitem input.check {
+    width: 16px;
+    height: 16px;
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+.login-form .right .leftitem label {
+    font-size: 12.5px;
+    color: #475569;
+    cursor: pointer;
+}
+
+.login-form .right .forget a {
+    color: #2563eb;
+    font-size: 12.5px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.login-form .right .forget a:hover {
+    text-decoration: underline;
+}
+
+/* Submit Button */
+.login-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    margin-top: 4px;
+}
+
+.login-submit-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.login-auth-separator {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.login-auth-separator::before,
+.login-auth-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.login-auth-separator span {
+    padding: 0 10px;
+}
+
+.register-switch-text {
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.register-switch-link {
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 4px;
+}
+
+.register-switch-link:hover {
+    text-decoration: underline;
+}
+
+/* ========================================================
+   RESPONSIVE DESIGN (TABLETS & PHONES)
+   ======================================================== */
+@media (max-width: 900px) {
+    .login-form {
+        flex-direction: column;
+    }
+
+    .login-form .left {
+        width: 100%;
+        min-height: auto;
+        padding: 32px 24px;
+    }
+
+    .login-form .left-checklist {
+        display: none;
+        /* Keep mobile concise */
+    }
+
+    .login-form .left-content h2 {
+        font-size: 22px;
+    }
+
+    .login-form .left-footer-quote {
+        position: static;
+        margin-top: 24px;
+    }
+
+    .login-form .right {
+        width: 100%;
+        min-height: auto;
+        padding: 36px 20px 48px;
+    }
+}
+
+@media (max-width: 580px) {
+    .login-form .right .head h1 {
+        font-size: 24px;
+    }
+
+    .login-form .right {
+        padding: 24px 16px 40px;
+    }
+}

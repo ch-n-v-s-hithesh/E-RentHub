@@ -1,0 +1,640 @@
+/* ========================================================
+   E-RentHub - Dedicated Product Details Page Styles (ProductDetail.css)
+   Vertical Layout: Top Image Showcase, Down Details
+   Modern, Clean, Responsive (Flexbox only, NO Grid)
+   ======================================================== */
+
+.product-page-wrapper {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 1. Official Sticky Navbar */
+.orders-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.orders-nav-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orders-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.orders-brand-logo {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.orders-brand-name {
+    font-size: 19px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.3px;
+}
+
+.orders-brand-name span {
+    color: #2563eb;
+}
+
+.orders-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.orders-nav-link {
+    text-decoration: none;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.15s ease;
+    padding: 6px 0;
+    position: relative;
+}
+
+.orders-nav-link:hover {
+    color: #2563eb;
+}
+
+.orders-nav-link.active {
+    color: #2563eb;
+    font-weight: 700;
+}
+
+.orders-nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2.5px;
+    background-color: #2563eb;
+    border-radius: 4px;
+}
+
+.sales-portal-link {
+    color: #059669 !important;
+}
+
+.sales-portal-link:hover {
+    color: #047857 !important;
+}
+
+.orders-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.navbar-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.navbar-cart-btn:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.navbar-cart-btn i {
+    font-size: 17px;
+    color: #ffffff !important;
+    line-height: 1;
+}
+
+.erenthub-counter-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Floating Rectified Toast */
+.erenthub-toast {
+    position: fixed !important;
+    bottom: 24px !important;
+    top: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+    z-index: 99999 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 50px !important;
+    width: auto !important;
+    max-width: min(90vw, 420px) !important;
+    pointer-events: none !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    animation: toastSlideUp 0.25s ease;
+}
+
+@keyframes toastSlideUp {
+    from {
+        transform: translate(-50%, 20px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* 2. Breadcrumb */
+.simple-breadcrumb {
+    max-width: 860px;
+    width: 92%;
+    margin: 16px auto 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: #64748b;
+    flex-wrap: wrap;
+}
+
+.simple-back-btn {
+    background: none;
+    border: none;
+    color: #2563eb;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.simple-back-btn:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-divider {
+    color: #cbd5e1;
+}
+
+/* 3. Main Product Card: TOP Image, DOWN Details */
+.simple-product-card.vertical-layout {
+    max-width: 860px;
+    width: 92%;
+    margin: 10px auto 40px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+/* TOP: Product Image Box */
+.simple-product-image-box {
+    width: 100%;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8fafc;
+    border: 1px solid #f1f5f9;
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.simple-product-image-box img {
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.25s ease;
+}
+
+.simple-product-image-box:hover img {
+    transform: scale(1.02);
+}
+
+.product-card-top-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background-color: #eff6ff;
+    color: #1d4ed8;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #bfdbfe;
+    z-index: 2;
+}
+
+/* DOWN: Product Information */
+.simple-product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.simple-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.simple-product-tag {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.simple-city-badge {
+    background-color: #f0fdf4;
+    color: #166534;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #bbf7d0;
+}
+
+.simple-verified-tag {
+    background-color: #f8fafc;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.simple-product-heading {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.simple-product-price-box {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.simple-price-val {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.simple-price-unit {
+    font-size: 15px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.simple-monthly-hint {
+    font-size: 13px;
+    color: #16a34a;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+.simple-product-description {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+}
+
+/* Specifications Table (WITHOUT OWNER NAME) */
+.simple-specs-box {
+    margin-top: 4px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+}
+
+.simple-specs-box h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.simple-specs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.simple-specs-table td {
+    padding: 7px 4px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.simple-specs-table tr:last-child td {
+    border-bottom: none;
+}
+
+.simple-specs-table td:first-child {
+    width: 32%;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.simple-specs-table td:last-child {
+    color: #0f172a;
+    font-weight: 600;
+}
+
+/* Rental Duration Stepper */
+.simple-duration-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 18px;
+}
+
+.simple-duration-box label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.simple-counter {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.simple-counter button {
+    width: 34px;
+    height: 32px;
+    background-color: #f1f5f9;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #334155;
+    transition: background-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.simple-counter button:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+.simple-counter span {
+    padding: 0 14px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* Total Price Breakdown */
+.simple-total-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+}
+
+.charge-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #475569;
+}
+
+.charge-row.tax-charge {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.charge-row.total-charge {
+    font-size: 15.5px;
+    font-weight: 800;
+    color: #0f172a;
+    border-top: 1px dashed #cbd5e1;
+    padding-top: 8px;
+    margin-top: 2px;
+}
+
+.total-highlight {
+    color: #2563eb;
+    font-size: 17px;
+}
+
+/* COD Assurance */
+.simple-cod-assurance {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #166534;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 10px 14px;
+}
+
+/* Action Buttons: ONLY Add to Cart */
+.simple-actions-box {
+    margin-top: 6px;
+    width: 100%;
+}
+
+.btn-add-cart {
+    width: 100%;
+    height: 48px;
+    padding: 0 20px;
+    background-color: #2563eb;
+    border: none;
+    color: #ffffff;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-add-cart:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.btn-add-cart.item-in-cart {
+    background-color: #16a34a;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+}
+
+.btn-add-cart.item-in-cart:hover {
+    background-color: #15803d;
+}
+
+/* 4. Footer */
+.simple-footer {
+    margin-top: auto;
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 24px;
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.simple-footer-links {
+    margin-top: 8px;
+}
+
+.simple-footer-links a {
+    color: #2563eb;
+    text-decoration: none;
+    margin: 0 8px;
+    font-weight: 600;
+}
+
+.simple-footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .orders-navbar {
+        height: 60px;
+        padding: 0;
+    }
+
+    .orders-nav-container {
+        padding: 0 14px;
+        height: 60px;
+    }
+
+    .orders-nav-links {
+        display: none !important;
+    }
+
+    .orders-brand-link {
+        order: 1 !important;
+        margin-right: auto;
+    }
+
+    .orders-nav-right {
+        order: 2 !important;
+        gap: 8px;
+    }
+
+    .simple-product-card.vertical-layout {
+        width: calc(100% - 24px);
+        padding: 16px;
+        margin: 10px auto 30px;
+    }
+
+    .simple-product-image-box {
+        height: 250px;
+        padding: 12px;
+    }
+
+    .simple-product-heading {
+        font-size: 18px;
+    }
+
+    .simple-price-val {
+        font-size: 24px;
+    }
+}

@@ -1,0 +1,156 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Gaming i5-11thGen 6GB-4GB Graphics Laptop",
+      "category": "Laptops",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 179,
+      "monthlyPrice": 5360,
+      "badge": "Popular",
+      "cpu": "Intel Core i5 11th Gen",
+      "ram": "8GB RAM",
+      "storage": "512GB SSD",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "High-performance gaming laptop with 11th Gen Core i5 processor and dedicated graphics for immersive gaming, coding, and heavy rendering."
+    },
+    {
+      "id": 2,
+      "name": "Windows i5 8thGen-8GB Laptop",
+      "category": "Laptops",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 79,
+      "monthlyPrice": 2287,
+      "badge": "Best Value",
+      "cpu": "Intel Core i5 8th Gen",
+      "ram": "8GB RAM",
+      "storage": "256GB SSD",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "Reliable and fast Windows laptop optimized for productivity, online classes, everyday office computing, and smooth multi-tasking."
+    },
+    {
+      "id": 3,
+      "name": "Canon EOS 200D II DSLR Camera (18-55mm Lens Kit)",
+      "category": "Cameras",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 149,
+      "monthlyPrice": 4470,
+      "badge": "Featured",
+      "cpu": "24.1MP Dual Pixel CMOS",
+      "ram": "4K Video Recording",
+      "storage": "64GB SD Card Included",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "Lightweight DSLR camera with Eye Detection AF, 4K video recording, and 18-55mm lens kit ideal for photography, vlogging, and events."
+    },
+    {
+      "id": 4,
+      "name": "Epson 4K Ultra HD Home Cinema Projector",
+      "category": "Projectors",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 189,
+      "monthlyPrice": 5670,
+      "badge": "Popular",
+      "cpu": "4K PRO-UHD 3000 Lumens",
+      "ram": "HDR10 / 3LCD Tech",
+      "storage": "Dual HDMI / WiFi",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "Cinema-grade 4K projection with brilliant color brightness, HDR10 support, and screen size up to 300 inches for movie nights and presentations."
+    },
+    {
+      "id": 5,
+      "name": "BenQ Full HD Conference & Event Projector",
+      "category": "Projectors",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 119,
+      "monthlyPrice": 3570,
+      "badge": "Featured",
+      "cpu": "1080p FHD Native",
+      "ram": "3600 ANSI Lumens",
+      "storage": "VGA / HDMI / USB",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "High-lumen projector for clear business presentations, outdoor screenings, workshops, and sports screenings in ambient light."
+    },
+    {
+      "id": 6,
+      "name": "Portable Smart Mini LED Projector (Android TV)",
+      "category": "Projectors",
+      "city": "Eluru",
+      "place": "Eluru (Local Hub)",
+      "dailyPrice": 79,
+      "monthlyPrice": 2370,
+      "badge": "Compact",
+      "cpu": "DLP Smart Engine",
+      "ram": "Built-in Battery",
+      "storage": "WiFi / Bluetooth",
+      "delivery": "Local Delivery (24-48 hrs)",
+      "image": "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?auto=format&fit=crop&w=600&q=80",
+      "inStock": true,
+      "description": "Pocket-sized wireless smart projector with built-in battery, automatic keystone correction, and streaming apps for camping and travel."
+    }
+  ],
+  "orders": [],
+  "profile": {
+    "fullName": "CH.N.V.S. Hithesh",
+    "phone": "7396348793",
+    "email": "chhithesh511@gmail.com",
+    "addressType": "HOME",
+    "address": "D.No: 4B-12-8, GNT Road, Near Fire Station, Powerpet",
+    "city": "Eluru",
+    "state": "Andhra Pradesh",
+    "pincode": "534002"
+  },
+  "userRentals": [
+    {
+      "id": 991,
+      "title": "Dell Latitude Business Laptop Core i5",
+      "category": "Laptops",
+      "dailyRate": 99,
+      "monthlyRate": 2800,
+      "city": "Eluru",
+      "area": "Powerpet",
+      "status": "Available for Rent",
+      "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80",
+      "ownerName": "Chaluvadi Subbalakshmi",
+      "ownerPhone": "7396348793",
+      "createdAt": "24 Apr 2025"
+    }
+  ],
+  "users": [
+    {
+      "email": "ch.n.v.s.hithesh@gmail.com",
+      "password": "ch.n.v.s.hithesh@511",
+      "name": "CH.N.V.S. Hithesh (Admin)",
+      "role": "admin",
+      "phone": "7396348793"
+    },
+    {
+      "email": "chhithesh511@gmail.com",
+      "password": "chhithesh@511",
+      "name": "Hithesh Chaluvadi (Customer)",
+      "role": "customer",
+      "phone": "7396348793"
+    },
+    {
+      "email": "balu.hithesh@gmail.com",
+      "password": "chhithesh@511",
+      "name": "Balu Hithesh (Delivery Partner)",
+      "role": "delivery",
+      "phone": "9876543210"
+    }
+  ]
+}

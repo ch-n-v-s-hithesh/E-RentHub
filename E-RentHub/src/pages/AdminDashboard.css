@@ -1,0 +1,1838 @@
+/* ========================================================
+   E-RentHub - Admin Workspace Stylesheet (AdminDashboard.css)
+   Clean, Human-Designed Responsive Admin Dashboard
+   ======================================================== */
+
+.adm-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+}
+
+
+.adm-sidebar {
+  width: 250px;
+  background-color: #09121f;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+  overflow-y: auto;
+  transition: transform 0.25s ease;
+}
+
+.adm-sidebar-brand {
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.adm-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.adm-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+}
+
+.adm-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-brand-text span {
+  font-size: 17px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.adm-brand-text span span {
+  color: #3b82f6;
+}
+
+.adm-brand-text small {
+  font-size: 10.5px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.adm-mobile-close {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Navigation */
+.adm-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 10px;
+  gap: 4px;
+  flex: 1;
+}
+
+.adm-nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.8px;
+  padding: 10px 12px 4px;
+}
+
+.adm-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.adm-nav-btn i {
+  font-size: 16px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adm-nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.adm-nav-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.adm-nav-pill {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.adm-logout-btn {
+  color: #f87171;
+}
+
+.adm-logout-btn:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+/* Sidebar User Footer */
+.adm-sidebar-user {
+  padding: 12px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.adm-avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.adm-user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-user-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.adm-user-sub {
+  font-size: 10.5px;
+  color: #94a3b8;
+}
+
+/* Drawer Backdrop */
+.adm-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 95;
+}
+
+/* ========================================================
+   2. MAIN WORKSPACE & HEADER
+   ======================================================== */
+.adm-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.adm-header {
+  background-color: #ffffff;
+  height: 60px;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.adm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adm-hamburger-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #334155;
+  cursor: pointer;
+}
+
+.adm-page-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.adm-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adm-btn-store {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.adm-btn-store:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* Body */
+.adm-body {
+  padding: 22px 24px 60px;
+  flex: 1;
+}
+
+.adm-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ========================================================
+   3. METRIC TILES ROW
+   ======================================================== */
+.adm-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.adm-stat-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.adm-stat-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+
+.adm-stat-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adm-stat-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.adm-stat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.adm-stat-icon.blue {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.adm-stat-icon.green {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+.adm-stat-icon.purple {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+.adm-stat-icon.amber {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.adm-stat-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.1;
+  margin: 4px 0 2px;
+}
+
+.adm-stat-sub {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.adm-stat-sub.success {
+  color: #16a34a;
+}
+
+/* Two Columns Grid */
+.adm-duo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+/* ========================================================
+   4. CARD PANELS & HEADERS
+   ======================================================== */
+.adm-panel {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+  overflow: hidden;
+}
+
+.adm-panel-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.adm-panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.adm-panel-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin: 2px 0 0;
+}
+
+.adm-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.adm-btn-primary:hover {
+  background-color: #1e293b;
+}
+
+.adm-btn-subtle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #ffffff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.adm-btn-subtle:hover {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+/* ========================================================
+   5. FILTER BAR & RIBBON
+   ======================================================== */
+.adm-filter-bar {
+  padding: 14px 20px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #edf2f7;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adm-filter-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.adm-search-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 520px;
+}
+
+.adm-search-field i {
+  position: absolute;
+  left: 11px;
+  color: #94a3b8;
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.adm-search-field input {
+  width: 100%;
+  height: 38px;
+  padding: 0 32px 0 34px;
+  font-size: 12.5px;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  outline: none;
+  color: #0f172a;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.adm-search-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.adm-search-clear {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adm-search-clear:hover {
+  color: #0f172a;
+}
+
+.adm-filter-reset-inline {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.adm-filter-reset-inline:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.adm-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.adm-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.adm-filter-group label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #475569;
+  line-height: 1;
+}
+
+.adm-select-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.adm-filter-group select {
+  width: 100%;
+  height: 38px;
+  padding: 0 30px 0 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 12.5px;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #0f172a;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.adm-filter-group select:hover {
+  border-color: #94a3b8;
+}
+
+.adm-filter-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.adm-select-arrow {
+  position: absolute;
+  right: 10px;
+  color: #64748b;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* Summary Strip */
+.adm-summary-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 20px;
+  background-color: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+  color: #475569;
+  flex-wrap: wrap;
+}
+
+.adm-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.adm-summary-item span {
+  color: #64748b;
+}
+
+.adm-summary-item strong {
+  color: #0f172a;
+}
+
+.adm-sep {
+  color: #cbd5e1;
+}
+
+/* ========================================================
+   6. DATA TABLES
+   ======================================================== */
+.adm-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  text-align: left;
+}
+
+.adm-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.adm-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.adm-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+.adm-code-cell {
+  font-family: monospace;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.adm-date-hint {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.adm-cell-price {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.adm-cell-deposit {
+  font-weight: 500;
+  color: #166534;
+  white-space: nowrap;
+}
+
+.adm-pill {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 500;
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.adm-city-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  color: #475569;
+}
+
+.adm-city-pill i {
+  color: #ef4444;
+}
+
+.adm-payment-pill {
+  font-size: 11px;
+  background-color: #f1f5f9;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #475569;
+}
+
+/* Product cell in products tab */
+.adm-product-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.adm-product-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  background-color: #f8fafc;
+  flex-shrink: 0;
+}
+
+.adm-product-specs {
+  font-size: 11px;
+  color: #64748b;
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.adm-btn-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #ffffff;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.adm-btn-delete:hover {
+  background-color: #fef2f2;
+}
+
+/* Badges */
+.adm-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.badge-active {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+}
+
+.badge-pending {
+  background-color: #fffbeb;
+  color: #b45309;
+}
+
+.badge-completed {
+  background-color: #f0fdf4;
+  color: #15803d;
+}
+
+.badge-returned {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.badge-cancelled {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+/* Empty Table */
+.adm-empty-table {
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.adm-empty-table i {
+  font-size: 32px;
+  color: #94a3b8;
+}
+
+.adm-empty-table h4 {
+  font-size: 14.5px;
+  color: #0f172a;
+  margin: 0;
+}
+
+.adm-empty-table p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0 0 6px;
+}
+
+/* ========================================================
+   7. MONTHLY REPORTS (BAR CHART & METRICS)
+   ======================================================== */
+.adm-report-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.adm-year-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.adm-year-selector select {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 12px;
+  background-color: #ffffff;
+  outline: none;
+}
+
+.adm-report-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 16px 20px 0;
+}
+
+.adm-report-box {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.adm-report-box.highlight {
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.adm-report-label {
+  font-size: 11.5px;
+  color: #64748b;
+}
+
+.adm-report-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.adm-report-val.price {
+  color: #15803d;
+}
+
+.adm-report-hint {
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* Visual Bar Chart */
+.adm-chart-section {
+  margin: 16px 20px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.adm-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.adm-chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.adm-chart-sub {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.adm-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 160px;
+  padding: 0 8px;
+  gap: 8px;
+}
+
+.adm-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.adm-bar-count {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.adm-bar-well {
+  width: 100%;
+  max-width: 34px;
+  height: 115px;
+  background-color: #f1f5f9;
+  border-radius: 4px 4px 1px 1px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.adm-bar-fill {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease;
+}
+
+.adm-bar-fill.active {
+  background-color: #2563eb;
+}
+
+.adm-bar-fill.empty {
+  background-color: #e2e8f0;
+}
+
+.adm-bar-month {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.has-data-row {
+  background-color: #ffffff;
+}
+
+/* ========================================================
+   8. MODAL
+   ======================================================== */
+.adm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.adm-modal-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.adm-modal-head {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adm-modal-head h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.adm-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.adm-modal-form {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adm-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.adm-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.adm-form-field label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.adm-form-field input,
+.adm-form-field select,
+.adm-form-field textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.adm-form-field input:focus,
+.adm-form-field select:focus,
+.adm-form-field textarea:focus {
+  border-color: #2563eb;
+}
+
+.adm-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* ========================================================
+   9. SALES TABLE & FINANCIAL METRICS BASE STYLES
+   ======================================================== */
+.adm-sales-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.adm-sales-kpi-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: all 0.15s ease;
+}
+
+.adm-sales-kpi-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.04);
+}
+
+.adm-sales-kpi-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.3px;
+}
+
+.adm-sales-kpi-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.1;
+  margin: 4px 0 2px;
+}
+
+.adm-sales-kpi-note {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.text-primary {
+  color: #2563eb !important;
+}
+
+.text-success {
+  color: #16a34a !important;
+}
+
+.text-deposit {
+  color: #15803d !important;
+}
+
+/* View Controls & Segmented Button Switcher */
+.adm-view-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.adm-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.adm-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.adm-toggle-btn:hover {
+  color: #0f172a;
+}
+
+.adm-toggle-btn.active {
+  background-color: #ffffff;
+  color: #0f172a;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.adm-toggle-btn i {
+  font-size: 14px;
+}
+
+/* Table specific */
+.adm-date-cell {
+  font-size: 12px;
+  color: #334155;
+  white-space: nowrap;
+}
+
+.adm-cell-total {
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.adm-table-tfoot td {
+  background-color: #f8fafc;
+  border-top: 2px solid #cbd5e1;
+  border-bottom: none;
+  padding: 12px 16px;
+  font-size: 12.5px;
+}
+
+/* Share percentage bar */
+.adm-share-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 110px;
+}
+
+.adm-share-pct {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #0f172a;
+  width: 38px;
+}
+
+.adm-share-bar {
+  flex: 1;
+  height: 6px;
+  background-color: #e2e8f0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.adm-share-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 6px;
+}
+
+/* ========================================================
+   10. MONTHLY SALES REPORT TABLE BASE STYLES
+   ======================================================== */
+.adm-pill-peak {
+  display: inline-block;
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid #bfdbfe;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.adm-text-muted {
+  color: #94a3b8;
+  font-size: 11.5px;
+}
+
+.adm-top-prod-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1e293b;
+  max-width: 200px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.adm-btn-view-month {
+  padding: 4px 8px !important;
+  font-size: 11px !important;
+  gap: 4px !important;
+  white-space: nowrap;
+}
+
+.adm-monthly-transactions-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.adm-month-filter-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #edf2f7;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.adm-month-sales-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.adm-month-sales-badge strong {
+  color: #0f172a;
+}
+
+.adm-table tr.empty-row td {
+  color: #94a3b8;
+}
+
+.adm-table tr.has-data-row {
+  background-color: #ffffff;
+}
+
+.adm-table tr.has-data-row:hover {
+  background-color: #f8fafc;
+}
+
+/* Mobile Scroll Helper */
+.adm-mobile-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.adm-mobile-scroll-hint i {
+  color: #2563eb;
+  font-size: 13px;
+}
+
+/* ========================================================
+   10.5. PRODUCT TYPE & CATEGORY BADGES FOR MONTHLY REPORTS
+   ======================================================== */
+.adm-orders-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.adm-order-count-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.adm-order-count-pill i {
+  color: #2563eb;
+  font-size: 14px;
+}
+
+.adm-cat-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+.adm-category-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+.adm-category-tag strong {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.adm-category-tag.cat-projectors {
+  background-color: #ede9fe;
+  color: #5b21b6;
+  border-color: #ddd6fe;
+}
+
+.adm-category-tag.cat-cameras {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-color: #a7f3d0;
+}
+
+.adm-category-tag.cat-sound-boxes {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.adm-category-tag.cat-laptops {
+  background-color: #e0f2fe;
+  color: #0369a1;
+  border-color: #bae6fd;
+}
+
+.adm-category-tag.cat-displays {
+  background-color: #fce7f3;
+  color: #9d174d;
+  border-color: #fbcfe8;
+}
+
+.adm-category-tag.cat-gaming {
+  background-color: #ffedd5;
+  color: #9a3412;
+  border-color: #fed7aa;
+}
+
+.adm-category-tag.cat-electronics {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.adm-prod-itemized-list {
+  font-size: 11.5px;
+  color: #475569;
+  line-height: 1.5;
+  max-width: 380px;
+}
+
+.adm-prod-chip strong {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* ========================================================
+   11. RESPONSIVE DESIGN (TABLET, MOBILE, PHONES)
+   ======================================================== */
+@media (max-width: 1100px) {
+  .adm-stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .adm-sales-kpis {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .adm-duo-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .adm-report-kpis {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 860px) {
+  .adm-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 260px;
+    z-index: 1000;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .adm-sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  .adm-mobile-close {
+    display: block;
+  }
+
+  .adm-hamburger-btn {
+    display: inline-flex;
+  }
+
+  .adm-header {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .adm-header-left {
+    gap: 10px;
+  }
+
+  .adm-page-title {
+    font-size: 15px;
+  }
+
+  .adm-body {
+    padding: 14px 14px 60px;
+    gap: 14px;
+  }
+
+  /* 2x2 grid for KPI cards so they never squeeze into 4 thin vertical strips */
+  .adm-sales-kpis {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .adm-sales-kpi-card {
+    padding: 13px 14px;
+    border-radius: 8px;
+    gap: 2px;
+  }
+
+  .adm-sales-kpi-title {
+    font-size: 10.5px;
+    letter-spacing: 0.2px;
+  }
+
+  .adm-sales-kpi-val {
+    font-size: 20px;
+    margin: 3px 0 2px;
+  }
+
+  .adm-sales-kpi-note {
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+
+  .adm-panel-head {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .adm-view-controls {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .adm-view-toggle {
+    display: flex;
+    width: 100%;
+  }
+
+  .adm-toggle-btn {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    padding: 7px 6px;
+    font-size: 12px;
+  }
+
+  .adm-btn-subtle {
+    justify-content: center;
+  }
+
+  .adm-filter-bar {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .adm-search-field {
+    width: 100%;
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .adm-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 10px;
+    width: 100%;
+  }
+
+  .adm-filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 3px;
+    width: 100%;
+  }
+
+  .adm-filter-group label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    letter-spacing: 0.2px;
+  }
+
+  .adm-filter-group select {
+    width: 100%;
+    box-sizing: border-box;
+    height: 38px;
+    padding: 0 28px 0 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    appearance: none;
+    -webkit-appearance: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .adm-select-wide {
+    max-width: 100%;
+  }
+
+  /* Show swipe hint on mobile */
+  .adm-mobile-scroll-hint {
+    display: flex;
+  }
+
+  /* Ensure table preserves readable column sizes and smoothly scrolls */
+  .adm-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .adm-table {
+    min-width: 840px !important;
+    table-layout: auto;
+  }
+
+  .adm-table th {
+    padding: 10px 14px;
+    font-size: 11px;
+    white-space: nowrap !important;
+  }
+
+  .adm-table td {
+    padding: 11px 14px;
+    font-size: 12px;
+  }
+
+  /* Specific column widths to prevent text clipping */
+  .adm-table th:nth-child(1),
+  .adm-table td:nth-child(1) {
+    min-width: 120px;
+  }
+
+  .adm-table th:nth-child(2),
+  .adm-table td:nth-child(2) {
+    min-width: 130px;
+  }
+
+  .adm-table th:nth-child(3),
+  .adm-table td:nth-child(3) {
+    min-width: 180px;
+  }
+
+  .adm-table th:nth-child(4),
+  .adm-table td:nth-child(4) {
+    min-width: 240px;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  .adm-stats-row {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* 2x2 grid for KPI cards with compact padding */
+  .adm-sales-kpis {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .adm-sales-kpi-card {
+    padding: 11px 12px;
+    border-radius: 8px;
+    gap: 2px;
+  }
+
+  .adm-sales-kpi-title {
+    font-size: 10px;
+    letter-spacing: 0.2px;
+  }
+
+  .adm-sales-kpi-val {
+    font-size: 18px;
+    margin: 2px 0 1px;
+  }
+
+  .adm-sales-kpi-note {
+    font-size: 9.5px;
+    line-height: 1.25;
+  }
+
+  .adm-stat-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  .adm-stat-val {
+    font-size: 18px;
+  }
+
+  .adm-btn-store span {
+    display: none;
+  }
+
+  .adm-page-title {
+    font-size: 14.5px;
+  }
+
+  .adm-header {
+    padding: 0 12px;
+    height: 52px;
+  }
+
+  .adm-body {
+    padding: 10px 10px 50px;
+    gap: 10px;
+  }
+
+  .adm-panel {
+    border-radius: 8px;
+  }
+
+  .adm-filter-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .adm-filter-group {
+    flex: unset !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 2px !important;
+  }
+
+  .adm-filter-group select {
+    width: 100% !important;
+    height: 36px !important;
+    font-size: 11.5px !important;
+    padding: 0 26px 0 8px !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+
+  .adm-filter-group label {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+  }
+
+  .adm-month-filter-ribbon {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .adm-month-sales-badge {
+    justify-content: space-between;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .adm-sales-kpis {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+
+  .adm-stats-row {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+}

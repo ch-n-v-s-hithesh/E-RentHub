@@ -1,0 +1,1748 @@
+/* ========================================================
+   E-RentHub - Dedicated Profile Page Stylesheet (Profile.css)
+   ======================================================== */
+
+.erenthub-home {
+    min-height: 100vh;
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 1. TOP NAVBAR */
+.products-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.navbar-brand-left {
+    display: flex;
+    align-items: center;
+}
+
+.products-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+}
+
+.products-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+    letter-spacing: -0.5px;
+}
+
+.products-logo-text span {
+    color: #2563eb;
+}
+
+.navbar-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Navigation Links */
+.orders-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.orders-nav-link {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.orders-nav-link:hover {
+    color: #2563eb;
+    background-color: #f1f5f9;
+}
+
+.orders-nav-link.active {
+    color: #2563eb;
+    background-color: #eff6ff;
+    font-weight: 700;
+}
+
+.orders-nav-link.sales-portal-link {
+    color: #1e293b;
+}
+
+.orders-nav-link.sales-portal-link:hover {
+    color: #2563eb;
+}
+
+/* Navbar Right Actions */
+.navbar-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.navbar-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.navbar-cart-btn:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.navbar-cart-btn i {
+    font-size: 17px;
+    color: #ffffff !important;
+    line-height: 1;
+}
+
+.erenthub-counter-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Toast */
+.erenthub-toast {
+    position: fixed !important;
+    bottom: 24px !important;
+    top: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+    z-index: 99999 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 50px !important;
+    width: auto !important;
+    max-width: min(90vw, 420px) !important;
+    pointer-events: none !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+@media (max-width: 768px) {
+    .orders-nav-links {
+        display: none;
+    }
+}
+
+
+/* ========================================================
+   E-RentHub - Flipkart Style Dashboard / Profile CSS
+   Faithfully matching the Flipkart Account Dashboard Layout:
+   - Sidebar: Hello Greeting + Profile Avatar & Nav Menu
+   - Profile Info: Personal Info (First/Last name), Gender, Email, Mobile
+   - Interactive Tabs: Profile, My Orders, Addresses, PAN Card, Payments, Wishlist
+   - Clean, Crisp, Responsive Design
+======================================================== */
+
+.dashboard-page {
+    background-color: #f1f3f6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #212121;
+}
+
+/* Back Link Bar */
+.dashboard-breadcrumb-bar {
+    max-width: 1240px;
+    margin: 12px auto 0;
+    padding: 0 16px;
+    width: 100%;
+}
+
+.dashboard-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #2874f0;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.dashboard-back-btn:hover {
+    background: #f0f5ff;
+    border-color: #2874f0;
+}
+
+/* Layout Grid / Flex */
+.dashboard-main-container {
+    max-width: 1240px;
+    margin: 14px auto 36px;
+    padding: 0 16px;
+    width: 100%;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/* ==========================================
+   LEFT SIDEBAR
+========================================== */
+.dashboard-sidebar {
+    width: 290px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* User Greeting Card */
+.sidebar-user-card {
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-avatar-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ffd644;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.user-avatar-svg {
+    width: 44px;
+    height: 44px;
+}
+
+.sidebar-greeting-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.sidebar-greeting-hello {
+    font-size: 12px;
+    color: #878787;
+    line-height: 1.2;
+    margin-bottom: 2px;
+}
+
+.sidebar-greeting-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #212121;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+/* Navigation Menu Card */
+.sidebar-menu-card {
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.sidebar-menu-section {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.sidebar-menu-section:last-child {
+    border-bottom: none;
+}
+
+/* Section Header / Main Nav Item */
+.menu-header-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    cursor: pointer;
+    background: #ffffff;
+    transition: background-color 0.15s ease;
+    user-select: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+.menu-header-item:hover {
+    background-color: #fbfbfb;
+}
+
+.menu-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.menu-header-icon {
+    font-size: 18px;
+    color: #2874f0;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-header-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #878787;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.menu-header-item.active-section .menu-header-title {
+    color: #2874f0;
+}
+
+.menu-header-arrow {
+    font-size: 18px;
+    color: #878787;
+}
+
+/* Sub-items */
+.menu-subitems-list {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 6px;
+}
+
+.menu-subitem-btn {
+    padding: 10px 16px 10px 50px;
+    font-size: 14px;
+    color: #212121;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: block;
+    width: 100%;
+    font-weight: 400;
+}
+
+.menu-subitem-btn:hover {
+    background-color: #f7f9fd;
+    color: #2874f0;
+}
+
+.menu-subitem-btn.active {
+    background-color: #f0f5ff;
+    color: #2874f0;
+    font-weight: 600;
+}
+
+/* Logout Button */
+.menu-logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #878787;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.menu-logout-btn i {
+    font-size: 18px;
+    color: #2874f0;
+    width: 20px;
+}
+
+.menu-logout-btn:hover {
+    background-color: #fff1f2;
+    color: #e11d48;
+}
+
+.menu-logout-btn:hover i {
+    color: #e11d48;
+}
+
+/* ==========================================
+   RIGHT CONTENT PANEL
+========================================== */
+.dashboard-content-panel {
+    flex: 1;
+    min-width: 0;
+    background: #ffffff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    padding: 24px 32px 36px;
+    min-height: 540px;
+}
+
+/* Section Header (Personal Info, Email, Mobile) */
+.profile-block-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.profile-block-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #212121;
+    margin: 0;
+}
+
+.profile-block-edit-btn {
+    background: none;
+    border: none;
+    color: #2874f0;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.2s;
+}
+
+.profile-block-edit-btn:hover {
+    text-decoration: underline;
+}
+
+/* Personal Info Inputs */
+.profile-inputs-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.profile-input-field {
+    flex: 1;
+    min-width: 220px;
+    max-width: 320px;
+    height: 48px;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 0 14px;
+    font-size: 14px;
+    color: #212121;
+    background-color: #fafafa;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.profile-input-field.editable {
+    background-color: #ffffff;
+    border-color: #2874f0;
+    box-shadow: 0 0 0 1px #2874f0;
+}
+
+.profile-input-field:focus {
+    background-color: #ffffff;
+    border-color: #2874f0;
+}
+
+.profile-input-field:disabled {
+    color: #333333;
+    cursor: default;
+    background-color: #fafafa;
+}
+
+/* Gender Row */
+.profile-gender-group {
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.profile-gender-label {
+    display: block;
+    font-size: 14px;
+    color: #212121;
+    margin-bottom: 10px;
+}
+
+.profile-gender-radios {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.gender-radio-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #212121;
+    cursor: pointer;
+    user-select: none;
+}
+
+.gender-radio-option input[type="radio"] {
+    width: 17px;
+    height: 17px;
+    accent-color: #2874f0;
+    cursor: pointer;
+}
+
+/* Action Save Button */
+.profile-save-action-btn {
+    background: #2874f0;
+    color: #ffffff;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 6px;
+    margin-right: 10px;
+}
+
+.profile-save-action-btn:hover {
+    background: #1b64d4;
+}
+
+.profile-cancel-action-btn {
+    background: #ffffff;
+    color: #878787;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.profile-cancel-action-btn:hover {
+    border-color: #9e9e9e;
+    color: #212121;
+}
+
+/* Page Last Save Action Bar */
+.profile-page-last-save-bar {
+    margin-top: 32px;
+    padding: 20px 24px;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: fadeInSaveBar 0.25s ease-in-out;
+}
+
+@keyframes fadeInSaveBar {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.profile-save-action-btn-large {
+    padding: 12px 36px;
+    font-size: 14px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 3px;
+    background: #2874f0;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(40, 116, 240, 0.25);
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+.profile-save-action-btn-large:hover {
+    background: #125ece;
+}
+
+/* Divider Between Sections */
+.profile-section-divider {
+    height: 1px;
+    background-color: #f0f0f0;
+    margin: 28px 0;
+}
+
+/* FAQs Section */
+.profile-faqs-wrapper {
+    margin-top: 32px;
+}
+
+.profile-faqs-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 16px;
+}
+
+.faq-item {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #f4f4f4;
+    padding-bottom: 14px;
+}
+
+.faq-question {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question:hover {
+    color: #2874f0;
+}
+
+.faq-answer {
+    font-size: 13px;
+    color: #666666;
+    line-height: 1.6;
+}
+
+/* Account Actions: Deactivate / Delete */
+.profile-account-actions {
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.deactivate-account-btn {
+    background: none;
+    border: none;
+    color: #2874f0;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+}
+
+.deactivate-account-btn:hover {
+    text-decoration: underline;
+}
+
+.account-verification-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #059669;
+    font-weight: 600;
+    background: #ecfdf5;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: 1px solid #a7f3d0;
+}
+
+/* ==========================================
+   MY ORDERS TAB STYLES
+========================================== */
+.orders-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.orders-filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.order-filter-chip {
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.order-filter-chip.active {
+    background: #2874f0;
+    color: #ffffff;
+    border-color: #2874f0;
+}
+
+.order-card-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    transition: box-shadow 0.2s;
+    background: #ffffff;
+    flex-wrap: wrap;
+}
+
+.order-card-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.order-device-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    background: #f8fafc;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.order-card-details {
+    flex: 1;
+    min-width: 220px;
+}
+
+.order-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 4px;
+}
+
+.order-card-meta {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.order-status-pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.order-status-pill.active {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.order-status-pill.returned {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.order-actions-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+/* ==========================================
+   MANAGE ADDRESSES TAB STYLES
+========================================== */
+.add-address-trigger-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    color: #2874f0;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    transition: background 0.15s;
+}
+
+.add-address-trigger-btn:hover {
+    background: #f0f5ff;
+}
+
+.address-form-box {
+    background: #f0f5ff;
+    border: 1px solid #2874f0;
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.address-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.address-form-grid > * {
+    flex: 1 1 200px;
+}
+
+.address-form-input {
+    height: 44px;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 0 12px;
+    font-size: 13px;
+    background: #ffffff;
+    outline: none;
+    width: 100%;
+}
+
+.address-form-input:focus {
+    border-color: #2874f0;
+}
+
+.address-card-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    background: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.address-type-tag {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #f0f0f0;
+    color: #878787;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-left: 10px;
+}
+
+.address-type-tag.default {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+}
+
+/* ==========================================
+   PAN CARD TAB STYLES
+========================================== */
+.pan-info-box {
+    max-width: 520px;
+}
+
+.pan-warning-banner {
+    background: #fffbeb;
+    border: 1px solid #fef3c7;
+    color: #92400e;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* ==========================================
+   MODAL / POPUP
+========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+}
+
+.modal-content-box {
+    background: #ffffff;
+    border-radius: 4px;
+    padding: 24px 28px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   MY RENTALS & GIVE ITEM FOR RENT STYLES
+========================================== */
+
+/* Sidebar counter badge */
+.sidebar-counter-tag {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 12px;
+}
+
+/* Rentals Hub Header & Tabs */
+.rentals-hub-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.rentals-hub-title-group h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rentals-hub-title-group p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+}
+
+.rentals-tab-switch {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+    gap: 4px;
+}
+
+.rentals-tab-btn {
+    border: none;
+    background: transparent;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.rentals-tab-btn:hover {
+    color: #0f172a;
+}
+
+.rentals-tab-btn.active {
+    background: #ffffff;
+    color: #2563eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* Metrics Banner for Listed Items */
+.rentals-stats-banner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.rentals-stat-box {
+    flex: 1 1 140px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rentals-stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.rentals-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+/* Search and Filters Bar */
+.rentals-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.rentals-search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 6px 12px;
+    gap: 8px;
+    flex: 1;
+    max-width: 320px;
+}
+
+.rentals-search-box input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    width: 100%;
+}
+
+.rentals-filter-select {
+    padding: 6px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #ffffff;
+    color: #334155;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Listings Grid */
+.rentals-listings-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.rental-card-item {
+    flex: 1 1 290px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.rental-card-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border-color: #cbd5e1;
+}
+
+.rental-card-img-container {
+    position: relative;
+    height: 170px;
+    background: #f1f5f9;
+    overflow: hidden;
+}
+
+.rental-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rental-card-photo-count {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(15, 23, 42, 0.8);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rental-status-chip {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rental-status-chip.available {
+    background: #10b981;
+    color: #ffffff;
+}
+
+.rental-status-chip.rented {
+    background: #f59e0b;
+    color: #ffffff;
+}
+
+.rental-card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.rental-card-cat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.rental-card-cat-badge {
+    font-size: 11px;
+    font-weight: 700;
+    color: #2563eb;
+    text-transform: uppercase;
+}
+
+.rental-card-condition {
+    font-size: 11px;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.rental-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.35;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 40px;
+}
+
+.rental-card-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.rental-card-daily-price {
+    font-size: 17px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.rental-card-month-price {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.rental-card-buy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    width: fit-content;
+}
+
+.rental-card-meta-info {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rental-card-actions {
+    margin-top: auto;
+    padding-top: 10px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.rental-toggle-btn {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.rental-toggle-btn.mark-rented {
+    background: #fef3c7;
+    color: #b45309;
+    border-color: #fde68a;
+}
+
+.rental-toggle-btn.mark-rented:hover {
+    background: #fde68a;
+}
+
+.rental-toggle-btn.mark-avail {
+    background: #d1fae5;
+    color: #047857;
+    border-color: #a7f3d0;
+}
+
+.rental-toggle-btn.mark-avail:hover {
+    background: #a7f3d0;
+}
+
+.rental-card-icon-btn {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.rental-card-icon-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.rental-card-icon-btn.delete:hover {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* ==========================================
+   GIVE ITEM FOR RENT (UPLOAD & DETAILS FORM)
+========================================== */
+.rental-form-box {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.rental-form-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rental-form-section-desc {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 16px;
+}
+
+/* Upload Photo Zone */
+.rental-upload-dropzone {
+    border: 2px dashed #93c5fd;
+    background: #eff6ff;
+    border-radius: 8px;
+    padding: 28px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 16px;
+}
+
+.rental-upload-dropzone:hover {
+    background: #dbeafe;
+    border-color: #3b82f6;
+}
+
+.rental-upload-icon {
+    font-size: 38px;
+    color: #2563eb;
+    margin-bottom: 8px;
+}
+
+.rental-upload-text-main {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.rental-upload-text-sub {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.rental-url-input-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.rental-url-input-bar input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+}
+
+.rental-url-input-bar button {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.rental-url-input-bar button:hover {
+    background: #1d4ed8;
+}
+
+/* Preset sample photos */
+.rental-preset-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.rental-preset-tag {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.rental-preset-btn {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #334155;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rental-preset-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+/* Uploaded Photos Gallery Preview */
+.rental-preview-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.rental-preview-thumb {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #cbd5e1;
+    background: #000;
+}
+
+.rental-preview-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rental-preview-thumb.primary {
+    border-color: #2563eb;
+}
+
+.rental-preview-primary-pill {
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background: #2563eb;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    text-align: center;
+    padding: 2px 0;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+}
+
+.rental-preview-remove-btn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.rental-preview-remove-btn:hover {
+    background: #dc2626;
+}
+
+/* Item Details Form Fields */
+.rental-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 20px;
+}
+
+.rental-field-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 calc(50% - 14px);
+    min-width: 200px;
+}
+
+.rental-field-box.full-width {
+    flex: 1 1 100%;
+    width: 100%;
+}
+
+.rental-field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.rental-field-input,
+.rental-field-select,
+.rental-field-textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #1e293b;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rental-field-input:focus,
+.rental-field-select:focus,
+.rental-field-textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Buy Option Highlight Box */
+.rental-buy-card-option {
+    flex: 1 1 100%;
+    width: 100%;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rental-buy-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.rental-buy-header input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #16a34a;
+    cursor: pointer;
+}
+
+.rental-buy-label-text strong {
+    font-size: 14px;
+    color: #166534;
+}
+
+.rental-buy-label-text p {
+    font-size: 12px;
+    color: #15803d;
+    margin: 2px 0 0;
+}
+
+/* Action Buttons */
+.rental-form-actions-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.rental-publish-btn {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rental-publish-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Quick View Modal for Rental Item */
+.rental-modal-container {
+    background: #ffffff;
+    border-radius: 8px;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.rental-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.rental-modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.rental-modal-close-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.rental-modal-gallery-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+}
+
+.rental-modal-img {
+    height: 180px;
+    width: auto;
+    max-width: 260px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+}
+
+/* ==========================================
+   RESPONSIVENESS
+========================================== */
+@media (max-width: 860px) {
+    .products-navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        width: 100%;
+    }
+
+    .orders-nav-links {
+        display: none !important;
+    }
+
+    /* Logo on LEFT side */
+    .navbar-brand-left {
+        order: 1 !important;
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+    }
+
+    /* Cart and Profile on RIGHT side */
+    .navbar-actions-right {
+        order: 2 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .dashboard-main-container {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+    }
+
+    .dashboard-content-panel {
+        width: 100%;
+        padding: 20px 18px;
+    }
+
+    .profile-inputs-row {
+        flex-direction: column;
+    }
+
+    .profile-input-field {
+        max-width: 100%;
+    }
+
+    .rental-field-box {
+        flex: 1 1 100%;
+    }
+}
+

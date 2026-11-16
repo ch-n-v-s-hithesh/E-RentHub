@@ -1,0 +1,25 @@
+{
+  "name": "erenthub-backend",
+  "version": "1.0.0",
+  "description": "E-RentHub Backend Server connected with MongoDB Compass",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node seed.js",
+    "backup": "node backup.js",
+    "restore": "node backup.js --restore",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.7.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.0",
+    "nodemailer": "^10.4.0"
+  }
+}

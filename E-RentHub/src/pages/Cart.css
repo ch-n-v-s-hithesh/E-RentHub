@@ -1,0 +1,304 @@
+/* ========================================================
+   E-RentHub - Dedicated Cart Page Stylesheet (Cart.css)
+   Clean, concise, and streamlined styling for Cart page
+   ======================================================== */
+
+.erenthub-home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Floating Toast Notification */
+.erenthub-toast {
+    position: fixed !important;
+    bottom: 24px !important;
+    top: auto !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+    z-index: 99999 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 50px !important;
+    width: auto !important;
+    max-width: min(90vw, 420px) !important;
+    pointer-events: none !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    animation: toastSlideIn 0.25s ease;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* 1. TOP NAVBAR */
+.products-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.navbar-brand-left {
+    display: flex;
+    align-items: center;
+}
+
+.products-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+}
+
+.navbar-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+.products-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+    letter-spacing: -0.5px;
+}
+
+.products-logo-text span {
+    color: #2563eb;
+}
+
+/* Navigation Links */
+.orders-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.orders-nav-link {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.orders-nav-link:hover {
+    color: #000000;
+    background-color: #f1f5f9;
+}
+
+/* Navbar Right Actions */
+.navbar-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.navbar-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.navbar-cart-btn:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.navbar-cart-btn i {
+    font-size: 17px;
+    color: #ffffff !important;
+    line-height: 1;
+}
+
+.erenthub-counter-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Stepper & Action Controls */
+.erenthub-day-counter {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+.erenthub-day-counter-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    font-weight: bold;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.erenthub-day-counter-btn:hover {
+    background-color: #e2e8f0;
+}
+
+.erenthub-btn-addcart {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.erenthub-btn-addcart:hover {
+    background-color: #1d4ed8;
+}
+
+.erenthub-btn-quickview {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.erenthub-btn-quickview:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+}
+
+/* Footer */
+.products-footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    padding: 24px 20px;
+    text-align: center;
+    margin-top: auto;
+    border-top: 1px solid #1e293b;
+}
+
+.products-copyright {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+    .products-navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        width: 100%;
+    }
+
+    .orders-nav-links {
+        display: none !important;
+    }
+
+    /* Logo on LEFT side */
+    .navbar-brand-left {
+        order: 1 !important;
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+    }
+
+    /* Cart and Profile on RIGHT side */
+    .navbar-actions-right {
+        order: 2 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .products-logo {
+        gap: 6px;
+    }
+
+    .navbar-logo-img {
+        height: 32px;
+    }
+
+    .products-logo-text {
+        font-size: 16px;
+    }
+}

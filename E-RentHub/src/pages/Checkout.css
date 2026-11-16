@@ -1,0 +1,159 @@
+/* ========================================================
+   E-RentHub - Dedicated Checkout Page Stylesheet (Checkout.css)
+   ======================================================== */
+
+.erenthub-home {
+    min-height: 100vh;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 1. TOP NAVBAR (Distraction-Free) */
+.products-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+}
+
+.navbar-brand-left {
+    display: flex;
+    align-items: center;
+}
+
+.products-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+}
+
+.products-logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0b2d6d;
+    letter-spacing: -0.5px;
+}
+
+.products-logo-text span {
+    color: #2563eb;
+}
+
+.navbar-logo-img {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Navbar Right */
+.navbar-actions-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.navbar-cart-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.navbar-cart-btn:hover {
+    background-color: #1d4ed8;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.navbar-cart-btn i {
+    font-size: 17px;
+    color: #ffffff !important;
+    line-height: 1;
+}
+
+.erenthub-counter-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #ef4444;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Secondary Button */
+.erenthub-btn-quickview {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.erenthub-btn-quickview:hover {
+    background-color: #f8fafc;
+    border-color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .products-navbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 16px;
+        width: 100%;
+    }
+
+    /* Logo on LEFT side */
+    .navbar-brand-left {
+        order: 1 !important;
+        display: flex;
+        align-items: center;
+        margin-right: auto;
+    }
+
+    /* Cart and Profile on RIGHT side */
+    .navbar-actions-right {
+        order: 2 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}

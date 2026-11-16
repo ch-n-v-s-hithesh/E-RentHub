@@ -1,0 +1,258 @@
+/* ========================================================
+   E-RentHub - Profile Dropdown Component Stylesheet (ProfileDropdown.css)
+   ======================================================== */
+
+.profile-dropdown-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 7px 12px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.profile-trigger-btn:hover {
+    background-color: #f1f5f9;
+    border-color: #cbd5e1;
+}
+
+.profile-user-icon {
+    font-size: 16px;
+    color: #2563eb;
+}
+
+.profile-user-name {
+    color: #0f172a;
+}
+
+.profile-caret-icon {
+    font-size: 12px;
+    color: #666666;
+}
+
+.flipkart-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 240px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+    padding: 8px 0;
+    z-index: 1000;
+    text-align: left;
+}
+
+.dropdown-header-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #888888;
+    text-transform: uppercase;
+    padding: 6px 16px 8px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.dropdown-items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-items-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: #1e293b;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.dropdown-items-list li:hover {
+    background-color: #f0f4ff;
+    color: #2563eb;
+}
+
+.dropdown-logout-item {
+    border-top: 1px solid #eeeeee;
+    margin-top: 4px;
+    padding-top: 9px !important;
+    color: #dc2626 !important;
+}
+
+.dropdown-logout-item:hover {
+    background-color: #fee2e2 !important;
+}
+
+/* Profile Modal Box */
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.profile-modal-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 440px;
+    padding: 22px;
+    border: 1px solid #dddddd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.profile-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.profile-modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-modal-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #777777;
+}
+
+.profile-user-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 14px;
+}
+
+.profile-avatar-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #2563eb;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.profile-user-details h4 {
+    margin: 0 0 2px;
+    font-size: 14px;
+    color: #111827;
+}
+
+.profile-user-details p {
+    margin: 0;
+    font-size: 12px;
+    color: #666666;
+}
+
+.profile-user-badge {
+    display: inline-block;
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+}
+
+.profile-stats-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.profile-stat-box {
+    flex: 1;
+    background-color: #f1f5f9;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+}
+
+.profile-stat-box span {
+    font-size: 11px;
+    color: #666666;
+    display: block;
+}
+
+.profile-stat-box strong {
+    font-size: 14px;
+    color: #111827;
+}
+
+.profile-actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.profile-btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.profile-btn-cart {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+.profile-btn-cart:hover {
+    background-color: #1d4ed8;
+}
+
+.profile-btn-logout {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.profile-btn-logout:hover {
+    background-color: #fecaca;
+}
