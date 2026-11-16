@@ -94,39 +94,109 @@ export default function DeliveryDashboard() {
         showToast("Address copied! Paste into Google Maps or your navigation app.");
     };
 
-    const handleConfirmDepositPickup = (order) => {
+    // 1. Delivery Guy accepts order
+    const handleAcceptOrder = (order) => {
+        const nextStatus = "Order Accepted • Heading to Pickup";
+        const nextStage = 2;
+        const note = "Delivery partner accepted order. Heading to pickup hub.";
+
         setDeliveries((prev) =>
-            prev.map((item) => (item.id === order.id ? { ...item, status: "Out for Local Delivery", trackingStage: 2 } : item))
+            prev.map((item) => (item.id === order.id ? { ...item, status: nextStatus, trackingStage: nextStage, statusNote: note } : item))
         );
 
         try {
-            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/verify-pickup`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-            }).catch(() => {});
-
+            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/accept-order`, { method: "POST" }).catch(() => {});
             const customerOrders = JSON.parse(localStorage.getItem("erenthub_orders") || "[]");
             const updated = customerOrders.map((o) =>
-                o.id === order.id
-                    ? { ...o, trackingStage: 2, statusNote: "Product picked up from owner. Out for doorstep delivery.", canCancel: false }
-                    : o
+                o.id === order.id ? { ...o, trackingStage: nextStage, status: nextStatus, statusNote: note } : o
             );
             localStorage.setItem("erenthub_orders", JSON.stringify(updated));
         } catch (e) { }
 
-        showToast(`Intake confirmed! Gadget picked up from owner. Out for doorstep delivery.`);
+        showToast(`Order #${order.id} accepted! Heading to pickup hub.`);
     };
 
+    // 2. Delivery Guy reached pickup location
+    const handleReachedPickup = (order) => {
+        const nextStatus = "Reached Pickup Location";
+        const nextStage = 3;
+        const note = "Delivery partner reached pickup location. Inspecting gadget with partner.";
+
+        setDeliveries((prev) =>
+            prev.map((item) => (item.id === order.id ? { ...item, status: nextStatus, trackingStage: nextStage, statusNote: note } : item))
+        );
+
+        try {
+            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/reached-pickup`, { method: "POST" }).catch(() => {});
+            const customerOrders = JSON.parse(localStorage.getItem("erenthub_orders") || "[]");
+            const updated = customerOrders.map((o) =>
+                o.id === order.id ? { ...o, trackingStage: nextStage, status: nextStatus, statusNote: note } : o
+            );
+            localStorage.setItem("erenthub_orders", JSON.stringify(updated));
+        } catch (e) { }
+
+        showToast(`Reached pickup location! Inspecting equipment.`);
+    };
+
+    // 3. Confirm pickup & start delivery
+    const handleConfirmDepositPickup = (order) => {
+        const nextStatus = "Out for Local Delivery";
+        const nextStage = 4;
+        const note = "Gadget picked up. Delivery partner en route to customer doorstep.";
+
+        setDeliveries((prev) =>
+            prev.map((item) => (item.id === order.id ? { ...item, status: nextStatus, trackingStage: nextStage, statusNote: note } : item))
+        );
+
+        try {
+            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/confirm-pickup`, { method: "POST" }).catch(() => {});
+            const customerOrders = JSON.parse(localStorage.getItem("erenthub_orders") || "[]");
+            const updated = customerOrders.map((o) =>
+                o.id === order.id ? { ...o, trackingStage: nextStage, status: nextStatus, statusNote: note, canCancel: false } : o
+            );
+            localStorage.setItem("erenthub_orders", JSON.stringify(updated));
+        } catch (e) { }
+
+        showToast(`Gadget picked up! Out for doorstep delivery.`);
+    };
+
+    // 4. Delivery Guy reached customer location
+    const handleReachedCustomer = (order) => {
+        const nextStatus = "Reached Customer Location";
+        const nextStage = 5;
+        const note = "Delivery partner arrived at your doorstep. Ready for inspection & handover.";
+
+        setDeliveries((prev) =>
+            prev.map((item) => (item.id === order.id ? { ...item, status: nextStatus, trackingStage: nextStage, statusNote: note } : item))
+        );
+
+        try {
+            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/reached-customer`, { method: "POST" }).catch(() => {});
+            const customerOrders = JSON.parse(localStorage.getItem("erenthub_orders") || "[]");
+            const updated = customerOrders.map((o) =>
+                o.id === order.id ? { ...o, trackingStage: nextStage, status: nextStatus, statusNote: note } : o
+            );
+            localStorage.setItem("erenthub_orders", JSON.stringify(updated));
+        } catch (e) { }
+
+        showToast(`Arrived at customer doorstep! Inspecting gadget.`);
+    };
+
+    // 5. Direct handover & delivery confirmation (No OTP required)
     const handleConfirmDelivery = (order) => {
         const completedTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        const nextStatus = "Delivered & Cash Collected";
+        const nextStage = 6;
+        const note = "Delivered to customer. Active Rental.";
 
         setDeliveries((prev) =>
             prev.map((item) => {
                 if (item.id === order.id) {
                     return {
                         ...item,
-                        status: "Delivered & Active Rental",
-                        trackingStage: 3,
+                        status: nextStatus,
+                        trackingStage: nextStage,
+                        statusNote: note,
                         completedAt: completedTime,
                     };
                 }
@@ -135,15 +205,11 @@ export default function DeliveryDashboard() {
         );
 
         try {
-            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/verify-delivery`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-            }).catch(() => {});
-
+            fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/confirm-delivery`, { method: "POST" }).catch(() => {});
             const customerOrders = JSON.parse(localStorage.getItem("erenthub_orders") || "[]");
             const updated = customerOrders.map((o) =>
                 o.id === order.id
-                    ? { ...o, status: "Active", trackingStage: 3, statusNote: "Delivered to customer. Active Rental.", canCancel: false }
+                    ? { ...o, status: "Active", trackingStage: nextStage, statusNote: note, canCancel: false }
                     : o
             );
             localStorage.setItem("erenthub_orders", JSON.stringify(updated));
@@ -316,8 +382,18 @@ export default function DeliveryDashboard() {
                         </div>
                     ) : (
                         displayedOrders.map((order) => {
-                            const isDone = order.status === "Delivered & Cash Collected";
-                            const isInTransit = order.status === "Out for Local Delivery";
+                            const isDone = order.trackingStage >= 6 || order.status === "Delivered & Cash Collected" || order.status === "Delivered & Active Rental" || order.status === "Completed";
+                            const stage = Number(order.trackingStage || 1);
+
+                            const getStatusBadge = () => {
+                                if (isDone) return { text: "Delivered", cls: "done" };
+                                if (stage === 5) return { text: "At Customer Doorstep", cls: "transit" };
+                                if (stage === 4) return { text: "Out for Delivery", cls: "transit" };
+                                if (stage === 3) return { text: "At Pickup Hub", cls: "transit" };
+                                if (stage === 2) return { text: "Heading to Hub", cls: "ready" };
+                                return { text: "Assigned • Accept Order", cls: "ready" };
+                            };
+                            const badge = getStatusBadge();
 
                             return (
                                 <div key={order.id} className={`dp-order-card ${isDone ? "is-done" : ""}`}>
@@ -329,8 +405,8 @@ export default function DeliveryDashboard() {
                                             <span className="dp-order-time">{order.assignedAt || "Assigned today"}</span>
                                         </div>
 
-                                        <span className={`dp-status-tag ${isDone ? "done" : isInTransit ? "transit" : "ready"}`}>
-                                            {isDone ? "Delivered" : isInTransit ? "Out for Delivery" : "Ready for Pickup"}
+                                        <span className={`dp-status-tag ${badge.cls}`}>
+                                            {badge.text}
                                         </span>
                                     </div>
 
@@ -487,23 +563,55 @@ export default function DeliveryDashboard() {
                                     {/* Footer Button */}
                                     <div className="dp-card-footer">
                                         {!isDone ? (
-                                            order.trackingStage < 2 || order.status === "Ready for Pickup" ? (
+                                            stage <= 1 ? (
+                                                <button
+                                                    type="button"
+                                                    className="dp-btn-action accept"
+                                                    style={{ backgroundColor: "#2563eb", color: "#ffffff" }}
+                                                    onClick={() => handleAcceptOrder(order)}
+                                                >
+                                                    <i className="ri-check-line"></i>
+                                                    <span>Accept Delivery Order</span>
+                                                </button>
+                                            ) : stage === 2 ? (
                                                 <button
                                                     type="button"
                                                     className="dp-btn-action pickup"
+                                                    style={{ backgroundColor: "#f59e0b", color: "#ffffff" }}
+                                                    onClick={() => handleReachedPickup(order)}
+                                                >
+                                                    <i className="ri-map-pin-2-line"></i>
+                                                    <span>Reached Pickup Location</span>
+                                                </button>
+                                            ) : stage === 3 ? (
+                                                <button
+                                                    type="button"
+                                                    className="dp-btn-action pickup"
+                                                    style={{ backgroundColor: "#d97706", color: "#ffffff" }}
                                                     onClick={() => handleConfirmDepositPickup(order)}
                                                 >
                                                     <i className="ri-inbox-archive-line"></i>
-                                                    <span>Confirm Pickup from Owner</span>
+                                                    <span>Picked Up Item • Start Delivery</span>
+                                                </button>
+                                            ) : stage === 4 ? (
+                                                <button
+                                                    type="button"
+                                                    className="dp-btn-action deliver"
+                                                    style={{ backgroundColor: "#0284c7", color: "#ffffff" }}
+                                                    onClick={() => handleReachedCustomer(order)}
+                                                >
+                                                    <i className="ri-map-pin-user-line"></i>
+                                                    <span>Reached Customer Location</span>
                                                 </button>
                                             ) : (
                                                 <button
                                                     type="button"
                                                     className="dp-btn-action deliver"
+                                                    style={{ backgroundColor: "#16a34a", color: "#ffffff" }}
                                                     onClick={() => handleConfirmDelivery(order)}
                                                 >
-                                                    <i className="ri-checkbox-circle-line"></i>
-                                                    <span>Customer Inspected • Confirm Handover</span>
+                                                    <i className="ri-shield-check-line"></i>
+                                                    <span>Customer Inspected • Complete Handover (No OTP)</span>
                                                 </button>
                                             )
                                         ) : (

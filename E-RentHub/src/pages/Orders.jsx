@@ -14,10 +14,12 @@ const STORE_LOCATION = {
 };
 
 const TRACKING_STAGES = [
-  { stage: 1, label: "Confirmed", location: "Hub", desc: "Order booked and confirmed." },
-  { stage: 2, label: "Out for Delivery", location: "In Transit", desc: "Delivery partner is on the way." },
-  { stage: 3, label: "Delivered & In Use", location: "With Customer", desc: "Delivered and verified. Rental is active." },
-  { stage: 4, label: "Returned", location: "Store Hub", desc: "Item returned safely. Full deposit refunded." },
+  { stage: 1, label: "Confirmed", location: "Store Hub", desc: "Order booked and assigned to delivery partner." },
+  { stage: 2, label: "Accepted", location: "Heading to Hub", desc: "Delivery partner accepted order and is traveling to pickup location." },
+  { stage: 3, label: "At Pickup Hub", location: "Inspecting", desc: "Delivery partner reached pickup location and is testing gadget." },
+  { stage: 4, label: "Out for Delivery", location: "En Route", desc: "Gadget picked up • Delivery partner on the way to your doorstep." },
+  { stage: 5, label: "At Doorstep", location: "Arrived", desc: "Delivery partner has arrived at your doorstep! Ready for handover." },
+  { stage: 6, label: "Delivered", location: "Active Rental", desc: "Handover complete! Rental is now active." },
 ];
 
 export default function Orders() {
@@ -37,16 +39,6 @@ export default function Orders() {
     if (!addr) return;
     navigator.clipboard.writeText(addr);
     showToast("Address copied to clipboard! Paste in Google Maps.");
-  };
-
-  const handleResendOtp = async (order) => {
-    try {
-      const res = await fetch(`http://localhost:5000/api/orders/${order.id.replace("#", "")}/resend-otp`, { method: "POST" });
-      const data = await res.json();
-      showToast(data.message || `Handover OTP resent to ${order.customerEmail}`);
-    } catch (e) {
-      showToast(`Handover OTP sent to registered mail ${order.customerEmail || "balue.hithesh@gmail.com"}`);
-    }
   };
 
   // Active cart count for navbar badge
@@ -472,10 +464,12 @@ export default function Orders() {
                             <span className="tracker-title">Order Progress</span>
                           </div>
                           <span className="tracker-current-stage">
-                            {stage === 1 && "Order confirmed • Prepared for courier pickup"}
-                            {stage === 2 && "Out for delivery with delivery partner"}
-                            {stage === 3 && "Delivered to your doorstep • Active rental"}
-                            {stage >= 4 && "Returned safely • Full deposit refunded"}
+                            {stage === 1 && "Order confirmed • Assigned to delivery partner"}
+                            {stage === 2 && "Partner accepted • Heading to pickup hub"}
+                            {stage === 3 && "Partner at pickup hub • Inspecting gadget"}
+                            {stage === 4 && "Out for delivery • On the way to your doorstep"}
+                            {stage === 5 && "Partner arrived at your doorstep • Ready for handover"}
+                            {stage >= 6 && "Delivered & active rental • Enjoy your gadget"}
                           </span>
                         </div>
 
@@ -582,15 +576,17 @@ export default function Orders() {
                               deliveryTitle="Your Doorstep Delivery"
                               customerName={order.customerName}
                               customerPhone={order.customerPhone}
-                              deliveryBoyName={order.assignedDeliveryBoy || "CH.N.V.S. Hithesh"}
-                              deliveryBoyPhone="+91 73963 48793"
-                              deliveryBoyVehicle="EV Scooter (AP-37)"
+                              deliveryBoyName={order.assignedDeliveryBoyName || order.assignedDeliveryBoy || "CH.N.V.S. Hithesh"}
+                              deliveryBoyPhone={order.assignedDeliveryBoyPhone || "+91 73963 48793"}
+                              deliveryBoyVehicle={order.assignedDeliveryBoyVehicle || "EV Scooter (AP-37)"}
                               deliveryBoyHub={order.pickupHub || "Powerpet Central Hub, Eluru"}
                               deliveryBoyRating="4.9 ★ (Verified Partner)"
                               showDeliveryBoy={true}
+                              trackingStage={Number(order.trackingStage || 1)}
+                              statusNote={order.statusNote}
                               height="280px"
                               showCards={true}
-                              defaultTab="route"
+                              isCustomerView={true}
                             />
                           </div>
                         )}
@@ -602,14 +598,14 @@ export default function Orders() {
                           </span>
                         </div>
 
-                        {/* Doorstep handover assurance */}
+                        {/* Doorstep Direct Handover Assurance (No OTP) */}
                         <div className="delivery-otp-notice" style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0" }}>
                           <div className="otp-notice-content">
                             <i className="ri-shield-check-line otp-icon" style={{ color: "#16a34a" }}></i>
                             <div>
-                              <div className="otp-title" style={{ color: "#0f172a" }}>Doorstep Handover & Quality Verification</div>
+                              <div className="otp-title" style={{ color: "#0f172a" }}>Doorstep Handover & Quality Inspection</div>
                               <div className="otp-desc" style={{ color: "#475569" }}>
-                                Inspect and test the equipment with our delivery partner at your doorstep. No OTP required—simply confirm handover and pay via Cash or UPI.
+                                Inspect and test the equipment with our delivery partner at your doorstep. Verified directly upon handover with cash or UPI payment.
                               </div>
                             </div>
                           </div>

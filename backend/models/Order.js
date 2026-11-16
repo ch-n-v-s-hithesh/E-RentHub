@@ -65,12 +65,31 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Active", "Pending", "Completed", "Returned", "Cancelled", "Ready for Pickup at Store"],
       default: "Pending",
     },
     assignedDeliveryBoy: {
       type: String,
-      default: "store.eluru@erenthub.in",
+      default: "ch.n.v.s.hithesh@gmail.com",
+    },
+    assignedDeliveryBoyName: {
+      type: String,
+      default: "CH.N.V.S. Hithesh",
+    },
+    assignedDeliveryBoyPhone: {
+      type: String,
+      default: "+91 73963 48793",
+    },
+    assignedDeliveryBoyVehicle: {
+      type: String,
+      default: "EV Scooter (AP-37)",
+    },
+    assignedDeliveryBoyHub: {
+      type: String,
+      default: "Powerpet Central Logistics Hub, Eluru",
+    },
+    assignedDeliveryBoyRating: {
+      type: String,
+      default: "4.9 ★ (180+ deliveries)",
     },
     salespersonEmail: {
       type: String,
@@ -82,17 +101,19 @@ const orderSchema = new mongoose.Schema(
     },
     deliveryStatus: {
       type: String,
-      enum: ["Assigned", "Sent to Store", "Ready for Pickup", "Collected", "Picked Up", "Out for Delivery", "Delivered", "Pickup Pending", "Returned"],
-      default: "Sent to Store",
+      default: "Order Confirmed",
     },
     storeDropoffStatus: {
       type: String,
-      enum: ["Pending Store Dropoff", "Received in Store", "Ready for Pickup"],
       default: "Pending Store Dropoff",
     },
     trackingStage: {
       type: Number,
       default: 1,
+    },
+    statusNote: {
+      type: String,
+      default: "Order confirmed. Assigned to delivery partner.",
     },
     collectionOtp: {
       type: String,

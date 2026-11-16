@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchProducts, createProduct, deleteProduct } from "./api";
+import { fetchProducts, createProduct, deleteProduct, fetchOrders } from "./api";
 import logo from "../assets/logo.png";
 import "./AdminDashboard.css";
 
@@ -250,11 +250,73 @@ export default function AdminDashboard() {
           total: Number(o.totalAmount || o.total || 496),
           paymentMode: o.paymentStatus || o.paymentMode || "Cash on Delivery",
           status: o.status === "Cancelled" ? "Cancelled" : (o.trackingStage >= 3 ? "Active" : "Pending"),
+          deliveryBoyName: o.assignedDeliveryBoyName || o.deliveryBoyName || "CH.N.V.S. Hithesh",
+          deliveryBoyPhone: o.assignedDeliveryBoyPhone || o.deliveryBoyPhone || "+91 73963 48793",
+          deliveryBoyVehicle: o.assignedDeliveryBoyVehicle || o.deliveryBoyVehicle || "EV Scooter (AP-37)",
+          deliveryBoyHub: o.pickupHub || o.assignedDeliveryBoyHub || "Powerpet Central Logistics Hub, Eluru",
+          deliveryStatus: o.deliveryStatus || (o.trackingStage >= 6 ? "Delivered" : o.trackingStage >= 4 ? "Out for Delivery" : o.trackingStage >= 2 ? "Heading to Pickup" : "Assigned"),
+          trackingStage: o.trackingStage || 1,
+          statusNote: o.statusNote || "Delivery Partner Assigned",
+          destinationAddress: o.deliveryAddress || o.destinationAddress || "Powerpet Main Road, Eluru - 534002",
         }));
       }
     } catch (e) { }
     return [];
   });
+
+  // Sync with MongoDB backend orders on mount
+  useEffect(() => {
+    let isMounted = true;
+    async function syncOrdersFromBackend() {
+      try {
+        const serverOrders = await fetchOrders();
+        if (!isMounted || !Array.isArray(serverOrders) || serverOrders.length === 0) return;
+        const legacyMockIds = new Set([
+          "#ERH-9402", "#ERH-8150", "#ERH-7920", "#ERH-7320", "#ERH-6840",
+          "#ERH-6120", "#ERH-5890", "#ERH-5510", "#ERH-5210", "#ERH-4980",
+          "#ERH-4750", "#ERH-4420", "#ERH-4110", "#ERH-3890", "#ERH-3560", "#ERH-3120",
+          "ERH-9402", "ERH-8150"
+        ]);
+        const mapped = serverOrders
+          .filter(o => !legacyMockIds.has(o.orderNumber ? (o.orderNumber.startsWith("#") ? o.orderNumber : `#${o.orderNumber}`) : (o.id || "")))
+          .map((o) => {
+            const rawId = o.orderNumber || o.id || `ERH-${o._id?.slice(-6) || "1001"}`;
+            const id = rawId.startsWith("#") ? rawId : `#${rawId}`;
+            return {
+              id,
+              customer: o.customerName || (o.customer && o.customer.name) || "Balu Hithesh",
+              customerPhone: o.customerPhone || (o.customer && o.customer.phone) || "+91 98480 12345",
+              customerCity: o.customerCity || "Eluru",
+              equipment: o.items?.[0]?.product?.name || o.name || "Epson 4K Ultra HD Home Cinema Projector",
+              startDate: o.rentalPeriod?.startDate ? new Date(o.rentalPeriod.startDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : (o.startDate || "Today"),
+              endDate: o.rentalPeriod?.endDate ? new Date(o.rentalPeriod.endDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : (o.endDate || "3 Days later"),
+              duration: `${o.rentalPeriod?.totalDays || o.durationDays || 3} Days`,
+              rentalFee: Number(o.pricing?.rentalFee || o.rentalPrice || 420),
+              securityDeposit: Number(o.pricing?.deposit || o.securityDeposit || 1500),
+              total: Number(o.pricing?.totalPayable || o.totalAmount || 496),
+              paymentMode: o.paymentDetails?.paymentMethod || o.paymentMode || "Cash on Delivery",
+              status: o.status === "Cancelled" ? "Cancelled" : (o.trackingStage >= 3 ? "Active" : "Pending"),
+              deliveryBoyName: o.assignedDeliveryBoyName || "CH.N.V.S. Hithesh",
+              deliveryBoyPhone: o.assignedDeliveryBoyPhone || "+91 73963 48793",
+              deliveryBoyVehicle: o.assignedDeliveryBoyVehicle || "EV Scooter (AP-37)",
+              deliveryBoyHub: o.assignedDeliveryBoyHub || "Powerpet Central Logistics Hub, Eluru",
+              deliveryStatus: o.deliveryStatus || (o.trackingStage >= 6 ? "Delivered" : o.trackingStage >= 4 ? "Out for Delivery" : o.trackingStage >= 2 ? "Heading to Pickup" : "Assigned"),
+              trackingStage: o.trackingStage || 1,
+              statusNote: o.statusNote || "Delivery Partner Assigned",
+              destinationAddress: o.deliveryDetails?.address?.line1 || o.deliveryAddress || "Powerpet Main Road, Eluru - 534002",
+            };
+          });
+
+        if (mapped.length > 0) {
+          setOrdersList(mapped);
+        }
+      } catch (err) {
+        console.warn("Backend orders sync error:", err);
+      }
+    }
+    syncOrdersFromBackend();
+    return () => { isMounted = false; };
+  }, []);
 
   // FILTERS FOR ORDERS (MONTH, YEAR, PRODUCT, STATUS, SEARCH)
   const [orderYearFilter, setOrderYearFilter] = useState("All");
@@ -627,6 +689,16 @@ export default function AdminDashboard() {
             <span>Monthly Reports</span>
           </button>
 
+          <button
+            type="button"
+            className={`adm-nav-btn ${activeTab === "Delivery" ? "active" : ""}`}
+            onClick={() => handleTabChange("Delivery")}
+          >
+            <i className="ri-riding-line"></i>
+            <span>Delivery Fleet</span>
+            <span className="adm-nav-pill" style={{ backgroundColor: "#10b981", color: "#ffffff" }}>1 Online</span>
+          </button>
+
           <div className="adm-nav-label" style={{ marginTop: "16px" }}>Account</div>
 
           <button
@@ -670,6 +742,7 @@ export default function AdminDashboard() {
               {activeTab === "Products" && "Products Catalog"}
               {activeTab === "Customers" && "Customer Directory"}
               {activeTab === "Reports" && "Monthly Reports"}
+              {activeTab === "Delivery" && "Delivery Fleet & Partners"}
             </h1>
           </div>
 
@@ -890,6 +963,7 @@ export default function AdminDashboard() {
                           <th>Rent Fee</th>
                           <th>Deposit</th>
                           <th>Payment</th>
+                          <th>Delivery Partner</th>
                           <th>Status</th>
                         </tr>
                       </thead>
@@ -910,6 +984,28 @@ export default function AdminDashboard() {
                             <td className="adm-cell-deposit">₹{Number(o.securityDeposit || 0).toLocaleString("en-IN")}</td>
                             <td>
                               <span className="adm-payment-pill">{o.paymentMode}</span>
+                            </td>
+                            <td>
+                              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                <div style={{ width: "30px", height: "30px", borderRadius: "50%", backgroundColor: "#eff6ff", color: "#2563eb", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "700", fontSize: "11px", border: "1px solid #bfdbfe", flexShrink: 0 }}>
+                                  CH
+                                </div>
+                                <div>
+                                  <div style={{ fontWeight: 600, fontSize: "12.5px", color: "#0f172a" }}>{o.deliveryBoyName || "CH.N.V.S. Hithesh"}</div>
+                                  <div className="adm-date-hint" style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                                    <span>{o.deliveryBoyVehicle || "EV Scooter (AP-37)"}</span>
+                                    <span>•</span>
+                                    <a href={`tel:${(o.deliveryBoyPhone || "+917396348793").replace(/\s+/g, "")}`} style={{ color: "#2563eb", textDecoration: "none" }}>
+                                      {o.deliveryBoyPhone || "+91 73963 48793"}
+                                    </a>
+                                  </div>
+                                  <div style={{ marginTop: "3px" }}>
+                                    <span style={{ fontSize: "10px", padding: "1px 6px", borderRadius: "4px", backgroundColor: "#f0fdf4", color: "#166534", fontWeight: "600", border: "1px solid #bbf7d0" }}>
+                                      {o.deliveryStatus || (o.trackingStage >= 6 ? "Delivered" : o.trackingStage >= 4 ? "Out for Delivery" : o.trackingStage >= 2 ? "Heading to Pickup" : "Assigned")}
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                             <td>
                               <span className={`adm-badge ${getBadgeClass(o.status)}`}>
@@ -1521,6 +1617,337 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================
+              TAB 5: DELIVERY FLEET & LOGISTICS PARTNERS
+             ======================================================== */}
+          {activeTab === "Delivery" && (
+            <div className="adm-tab-content">
+              <div className="adm-panel">
+                <div className="adm-panel-head">
+                  <div>
+                    <h3 className="adm-panel-title">Delivery Fleet & Partner Operations</h3>
+                    <p className="adm-panel-sub">
+                      Assigned delivery personnel, EV fleet dispatch status, and real-time order handover tracking.
+                    </p>
+                  </div>
+                </div>
+
+                {/* FLEET KPIS */}
+                <div className="adm-sales-kpis" style={{ marginBottom: "20px" }}>
+                  <div className="adm-kpi-card">
+                    <span className="adm-kpi-label">Active Delivery Partners</span>
+                    <strong className="adm-kpi-val" style={{ color: "#16a34a" }}>
+                      1 Partner Online
+                    </strong>
+                    <div className="adm-kpi-sub">
+                      <span>CH.N.V.S. Hithesh • On Duty</span>
+                    </div>
+                  </div>
+
+                  <div className="adm-kpi-card">
+                    <span className="adm-kpi-label">Eco Fleet</span>
+                    <strong className="adm-kpi-val" style={{ color: "#2563eb" }}>
+                      1 EV Scooter
+                    </strong>
+                    <div className="adm-kpi-sub">
+                      <span>Registration: AP-37</span>
+                    </div>
+                  </div>
+
+                  <div className="adm-kpi-card">
+                    <span className="adm-kpi-label">Central Hub</span>
+                    <strong className="adm-kpi-val" style={{ color: "#0f172a" }}>
+                      Powerpet, Eluru
+                    </strong>
+                    <div className="adm-kpi-sub">
+                      <span>Full City Doorstep Coverage</span>
+                    </div>
+                  </div>
+
+                  <div className="adm-kpi-card">
+                    <span className="adm-kpi-label">Handover Verification</span>
+                    <strong className="adm-kpi-val" style={{ color: "#059669" }}>
+                      Direct Handover
+                    </strong>
+                    <div className="adm-kpi-sub">
+                      <span>No OTP Required • Cash/UPI</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* DELIVERY PARTNER PROFILE CARD */}
+                <div
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    marginBottom: "24px",
+                    boxShadow: "0 1px 3px rgba(15, 23, 42, 0.05)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      flexWrap: "wrap",
+                      gap: "16px",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                      <div
+                        style={{
+                          width: "56px",
+                          height: "56px",
+                          borderRadius: "50%",
+                          backgroundColor: "#eff6ff",
+                          border: "2px solid #3b82f6",
+                          color: "#2563eb",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: "22px",
+                          fontWeight: "800",
+                          position: "relative",
+                        }}
+                      >
+                        CH
+                        <span
+                          style={{
+                            position: "absolute",
+                            bottom: "1px",
+                            right: "1px",
+                            width: "12px",
+                            height: "12px",
+                            backgroundColor: "#16a34a",
+                            borderRadius: "50%",
+                            border: "2px solid #ffffff",
+                          }}
+                        ></span>
+                      </div>
+
+                      <div>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                          <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "700", color: "#0f172a" }}>
+                            CH.N.V.S. Hithesh
+                          </h3>
+                          <span
+                            style={{
+                              backgroundColor: "#f0fdf4",
+                              color: "#166534",
+                              fontSize: "11px",
+                              fontWeight: "700",
+                              padding: "2px 8px",
+                              borderRadius: "4px",
+                              border: "1px solid #bbf7d0",
+                            }}
+                          >
+                            <i className="ri-checkbox-circle-fill"></i> Primary Delivery Partner
+                          </span>
+                          <span
+                            style={{
+                              backgroundColor: "#eff6ff",
+                              color: "#1d4ed8",
+                              fontSize: "11px",
+                              fontWeight: "700",
+                              padding: "2px 8px",
+                              borderRadius: "4px",
+                              border: "1px solid #bfdbfe",
+                            }}
+                          >
+                            4.9 ★ (180+ Deliveries)
+                          </span>
+                        </div>
+                        <p style={{ margin: "4px 0 0", fontSize: "13px", color: "#64748b" }}>
+                          Lead Field Operations & Doorstep Inspection Partner
+                        </p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                      <a
+                        href="tel:+917396348793"
+                        style={{
+                          backgroundColor: "#2563eb",
+                          color: "#ffffff",
+                          padding: "8px 14px",
+                          borderRadius: "6px",
+                          fontSize: "13px",
+                          fontWeight: "600",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <i className="ri-phone-fill"></i> Call Partner (+91 73963 48793)
+                      </a>
+                      <a
+                        href="mailto:ch.n.v.s.hithesh@gmail.com"
+                        style={{
+                          backgroundColor: "#f8fafc",
+                          color: "#334155",
+                          border: "1px solid #cbd5e1",
+                          padding: "8px 14px",
+                          borderRadius: "6px",
+                          fontSize: "13px",
+                          fontWeight: "600",
+                          textDecoration: "none",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                        }}
+                      >
+                        <i className="ri-mail-line"></i> Email Partner
+                      </a>
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                      gap: "12px",
+                      marginTop: "16px",
+                      paddingTop: "16px",
+                      borderTop: "1px solid #f1f5f9",
+                    }}
+                  >
+                    <div>
+                      <small style={{ color: "#64748b", fontSize: "11px", textTransform: "uppercase", fontWeight: "700" }}>Assigned Vehicle</small>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", marginTop: "2px" }}>
+                        <i className="ri-riding-line" style={{ color: "#2563eb", marginRight: "4px" }}></i> EV Scooter (AP-37)
+                      </div>
+                    </div>
+
+                    <div>
+                      <small style={{ color: "#64748b", fontSize: "11px", textTransform: "uppercase", fontWeight: "700" }}>Operating Hub</small>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", marginTop: "2px" }}>
+                        <i className="ri-store-2-line" style={{ color: "#2563eb", marginRight: "4px" }}></i> Powerpet Central Logistics Hub, Eluru
+                      </div>
+                    </div>
+
+                    <div>
+                      <small style={{ color: "#64748b", fontSize: "11px", textTransform: "uppercase", fontWeight: "700" }}>Partner Phone</small>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", marginTop: "2px" }}>
+                        <i className="ri-phone-line" style={{ color: "#2563eb", marginRight: "4px" }}></i> +91 73963 48793
+                      </div>
+                    </div>
+
+                    <div>
+                      <small style={{ color: "#64748b", fontSize: "11px", textTransform: "uppercase", fontWeight: "700" }}>Background Verification</small>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#166534", marginTop: "2px" }}>
+                        <i className="ri-shield-check-fill" style={{ color: "#16a34a", marginRight: "4px" }}></i> Govt ID & Police Verified
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* DISPATCH QUEUE TABLE */}
+                <div className="adm-panel-head" style={{ marginBottom: "12px", borderBottom: "none", padding: "0 0 4px" }}>
+                  <div>
+                    <h4 style={{ margin: 0, fontSize: "15px", fontWeight: "700", color: "#0f172a" }}>
+                      Active Dispatches & Assigned Deliveries ({ordersList.filter(o => o.status !== "Cancelled").length})
+                    </h4>
+                    <p style={{ margin: "2px 0 0", fontSize: "12px", color: "#64748b" }}>
+                      Orders routed to CH.N.V.S. Hithesh for doorstep delivery in Eluru.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="adm-table-wrap">
+                  {ordersList.filter(o => o.status !== "Cancelled").length === 0 ? (
+                    <div className="adm-empty-table">
+                      <i className="ri-truck-line"></i>
+                      <h4>No active delivery dispatches</h4>
+                      <p>All placed orders will be assigned to CH.N.V.S. Hithesh and shown here.</p>
+                    </div>
+                  ) : (
+                    <table className="adm-table">
+                      <thead>
+                        <tr>
+                          <th>Order #</th>
+                          <th>Customer</th>
+                          <th>Gadget Rented</th>
+                          <th>Destination Address</th>
+                          <th>Assigned Rider</th>
+                          <th>Vehicle</th>
+                          <th>Live Delivery Stage</th>
+                          <th>Navigation</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {ordersList
+                          .filter((o) => o.status !== "Cancelled")
+                          .map((o) => (
+                            <tr key={o.id}>
+                              <td className="adm-code-cell">{o.id}</td>
+                              <td>
+                                <strong>{o.customer}</strong>
+                                <div className="adm-date-hint">{o.customerPhone}</div>
+                              </td>
+                              <td>{o.equipment}</td>
+                              <td>
+                                <div style={{ fontSize: "12px", color: "#334155", maxWidth: "220px" }}>
+                                  {o.destinationAddress || "Powerpet Main Road, Eluru - 534002"}
+                                </div>
+                              </td>
+                              <td>
+                                <strong>{o.deliveryBoyName || "CH.N.V.S. Hithesh"}</strong>
+                                <div className="adm-date-hint">{o.deliveryBoyPhone || "+91 73963 48793"}</div>
+                              </td>
+                              <td>
+                                <span className="adm-pill">{o.deliveryBoyVehicle || "EV Scooter (AP-37)"}</span>
+                              </td>
+                              <td>
+                                <span
+                                  style={{
+                                    fontSize: "11px",
+                                    padding: "3px 8px",
+                                    borderRadius: "4px",
+                                    backgroundColor: o.trackingStage >= 6 ? "#f0fdf4" : o.trackingStage >= 4 ? "#eff6ff" : "#fffbeb",
+                                    color: o.trackingStage >= 6 ? "#166534" : o.trackingStage >= 4 ? "#1d4ed8" : "#b45309",
+                                    fontWeight: "700",
+                                    border: `1px solid ${o.trackingStage >= 6 ? "#bbf7d0" : o.trackingStage >= 4 ? "#bfdbfe" : "#fef3c7"}`,
+                                    display: "inline-block",
+                                  }}
+                                >
+                                  {o.deliveryStatus || (o.trackingStage >= 6 ? "Delivered & Active" : o.trackingStage >= 4 ? "Out for Delivery" : o.trackingStage >= 2 ? "Heading to Pickup" : "Assigned")}
+                                </span>
+                              </td>
+                              <td>
+                                <a
+                                  href={`https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(o.deliveryBoyHub || "Shop #4, Powerpet Main Road, Eluru")}&destination=${encodeURIComponent(o.destinationAddress || "Powerpet Main Road, Eluru")}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{
+                                    backgroundColor: "#eff6ff",
+                                    color: "#2563eb",
+                                    border: "1px solid #bfdbfe",
+                                    padding: "4px 8px",
+                                    borderRadius: "4px",
+                                    fontSize: "11px",
+                                    fontWeight: "700",
+                                    textDecoration: "none",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "4px",
+                                  }}
+                                >
+                                  <i className="ri-map-pin-2-fill"></i> Maps Route
+                                </a>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  )}
+                </div>
               </div>
             </div>
           )}

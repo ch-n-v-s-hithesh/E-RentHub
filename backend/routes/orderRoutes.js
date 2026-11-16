@@ -101,6 +101,12 @@ router.post("/", async (req, res) => {
       paymentMode: data.paymentMode || data.paymentStatus || "Pay on Delivery (Cash / UPI)",
       status: "Pending",
       assignedDeliveryBoy: (data.assignedDeliveryBoy || "ch.n.v.s.hithesh@gmail.com").toLowerCase(),
+      assignedDeliveryBoyName: data.assignedDeliveryBoyName || "CH.N.V.S. Hithesh",
+      assignedDeliveryBoyPhone: data.assignedDeliveryBoyPhone || "+91 73963 48793",
+      assignedDeliveryBoyVehicle: data.assignedDeliveryBoyVehicle || "EV Scooter (AP-37)",
+      assignedDeliveryBoyHub: data.pickupHub || "Powerpet Central Logistics Hub, Eluru",
+      assignedDeliveryBoyRating: "4.9 ★ (180+ deliveries)",
+      statusNote: data.statusNote || "Order confirmed. Assigned to delivery partner.",
       salespersonEmail,
       salespersonName,
       deliveryStatus: "Order Confirmed",
@@ -191,6 +197,105 @@ router.post("/:id/send-deposit-otp", async (req, res) => {
   });
 });
 
+// 1. Delivery Guy accepts order
+router.post("/:id/accept-order", async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      $or: [{ _id: req.params.id }, { orderNumber: req.params.id }],
+    });
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.deliveryStatus = "Order Accepted • Heading to Pickup";
+    order.trackingStage = 2;
+    order.statusNote = "Delivery partner accepted order. Heading to pickup hub.";
+    await order.save();
+
+    return res.json({ success: true, message: "Order accepted. En route to pickup hub.", order });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 2. Delivery Guy reached pickup location
+router.post("/:id/reached-pickup", async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      $or: [{ _id: req.params.id }, { orderNumber: req.params.id }],
+    });
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.deliveryStatus = "Reached Pickup Location";
+    order.storeDropoffStatus = "Partner at Hub";
+    order.trackingStage = 3;
+    order.statusNote = "Delivery partner reached pickup location. Inspecting gadget.";
+    await order.save();
+
+    return res.json({ success: true, message: "Reached pickup location. Inspecting gadget.", order });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 3. Confirm pickup & start delivery
+router.post("/:id/confirm-pickup", async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      $or: [{ _id: req.params.id }, { orderNumber: req.params.id }],
+    });
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.deliveryStatus = "Out for Local Delivery";
+    order.storeDropoffStatus = "Picked Up from Owner";
+    order.trackingStage = 4;
+    order.statusNote = "Gadget picked up. Delivery partner en route to customer doorstep.";
+    await order.save();
+
+    return res.json({ success: true, message: "Gadget picked up. Out for doorstep delivery.", order });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 4. Delivery Guy reached customer location
+router.post("/:id/reached-customer", async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      $or: [{ _id: req.params.id }, { orderNumber: req.params.id }],
+    });
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.deliveryStatus = "Reached Customer Location";
+    order.trackingStage = 5;
+    order.statusNote = "Delivery partner arrived at customer doorstep. Inspecting gadget with customer.";
+    await order.save();
+
+    return res.json({ success: true, message: "Arrived at customer location. Ready for inspection & handover.", order });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 5. Direct handover & delivery confirmation (No OTP required)
+router.post("/:id/confirm-delivery", async (req, res) => {
+  try {
+    const order = await Order.findOne({
+      $or: [{ _id: req.params.id }, { orderNumber: req.params.id }],
+    });
+    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
+
+    order.deliveryStatus = "Delivered & Active Rental";
+    order.status = "Active";
+    order.trackingStage = 6;
+    order.statusNote = "Delivered to customer. Active Rental.";
+    await order.save();
+
+    return res.json({ success: true, message: "Handover confirmed! Order is now an active rental.", order });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Backward compatibility alias (No OTP check)
 router.post("/:id/verify-pickup", async (req, res) => {
   try {
     const order = await Order.findOne({
@@ -200,19 +305,17 @@ router.post("/:id/verify-pickup", async (req, res) => {
 
     order.deliveryStatus = "Out for Local Delivery";
     order.storeDropoffStatus = "Picked Up from Owner";
-    order.trackingStage = 2;
+    order.trackingStage = 4;
+    order.statusNote = "Gadget picked up. Delivery partner en route to customer doorstep.";
     await order.save();
 
-    return res.json({
-      success: true,
-      message: "Pickup confirmed from owner. Out for doorstep delivery.",
-      order,
-    });
+    return res.json({ success: true, message: "Pickup confirmed. Out for doorstep delivery.", order });
   } catch (err) {
     return res.status(500).json({ success: false, error: err.message });
   }
 });
 
+// Backward compatibility alias (No OTP check)
 router.post("/:id/verify-delivery", async (req, res) => {
   try {
     const order = await Order.findOne({
@@ -220,16 +323,13 @@ router.post("/:id/verify-delivery", async (req, res) => {
     });
     if (!order) return res.status(404).json({ success: false, message: "Order not found" });
 
-    order.deliveryStatus = "Delivered";
+    order.deliveryStatus = "Delivered & Active Rental";
     order.status = "Active";
-    order.trackingStage = 3;
+    order.trackingStage = 6;
+    order.statusNote = "Delivered to customer. Active Rental.";
     await order.save();
 
-    return res.json({
-      success: true,
-      message: "Handover confirmed. Rental is now active.",
-      order,
-    });
+    return res.json({ success: true, message: "Handover confirmed. Rental is now active.", order });
   } catch (err) {
     return res.status(500).json({ success: false, error: err.message });
   }
