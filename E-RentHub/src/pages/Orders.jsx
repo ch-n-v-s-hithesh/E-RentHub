@@ -581,11 +581,11 @@ export default function Orders() {
                               deliveryBoyVehicle={order.assignedDeliveryBoyVehicle || "EV Scooter (AP-37)"}
                               deliveryBoyHub={order.pickupHub || "Powerpet Central Hub, Eluru"}
                               deliveryBoyRating="4.9 ★ (Verified Partner)"
-                              showDeliveryBoy={true}
+                              showDeliveryBoy={false}
                               trackingStage={Number(order.trackingStage || 1)}
                               statusNote={order.statusNote}
-                              height="280px"
-                              showCards={true}
+                              height="290px"
+                              showCards={false}
                               isCustomerView={true}
                             />
                           </div>

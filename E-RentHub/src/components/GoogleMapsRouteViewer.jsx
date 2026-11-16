@@ -3,8 +3,9 @@ import "./GoogleMapsRouteViewer.css";
 
 /**
  * GoogleMapsRouteViewer
- * Renders an interactive Google Maps embedded route or location viewer
- * with one-click direct links to Google Maps app/web, and assigned delivery boy details.
+ * Renders an interactive Google Maps embedded route or location viewer.
+ * For customers: displays ONLY the live route/location of where the delivery partner is.
+ * For admin/staff: can optionally display location cards and switcher tabs.
  */
 export default function GoogleMapsRouteViewer({
   pickupAddress = "Shop #4, Powerpet Main Road, Near Powerpet Railway Station, Eluru - 534002",
@@ -18,34 +19,33 @@ export default function GoogleMapsRouteViewer({
   deliveryBoyVehicle = "EV Scooter (AP-37)",
   deliveryBoyHub = "Powerpet Central Hub, Eluru",
   deliveryBoyRating = "4.9 ★ (180+ deliveries)",
-  showDeliveryBoy = true,
+  showDeliveryBoy = false,
   trackingStage = 1,
   statusNote,
   height = "320px",
-  showCards = true,
+  showCards = false,
   defaultTab = "route", // 'route' | 'delivery' | 'pickup'
   isCustomerView = false,
 }) {
   const cleanPickup = pickupAddress || "Powerpet Main Road, Eluru - 534002";
   const cleanDelivery = deliveryAddress || "Eluru, Andhra Pradesh - 534002";
 
-  // Compute stage-specific active tab
+  // Determine stage-specific view based on where the delivery partner currently is
   const getStageTab = (stage) => {
     if (stage === 2 || stage === 3) return "pickup";
-    if (stage === 4) return "route";
-    if (stage >= 5) return "delivery";
-    return defaultTab || "route";
+    if (stage === 5 || stage >= 6) return "delivery";
+    return "route"; // Stages 1 & 4: Route between pickup and customer
   };
 
   const [activeTab, setActiveTab] = useState(() => getStageTab(trackingStage));
   const [copiedKey, setCopiedKey] = useState("");
 
-  // Sync activeTab whenever trackingStage changes
+  // Keep view synchronized with live tracking stage
   useEffect(() => {
     setActiveTab(getStageTab(trackingStage));
   }, [trackingStage]);
 
-  // Google Maps URLs
+  // Google Maps Embed URLs
   const routeEmbedUrl = `https://maps.google.com/maps?saddr=${encodeURIComponent(cleanPickup)}&daddr=${encodeURIComponent(cleanDelivery)}&output=embed`;
   const deliveryEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(cleanDelivery)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
   const pickupEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(cleanPickup)}&t=&z=16&ie=UTF8&iwloc=&output=embed`;
@@ -78,71 +78,79 @@ export default function GoogleMapsRouteViewer({
 
   const getLiveLocationText = () => {
     if (statusNote) return statusNote;
-    if (trackingStage === 2) return `🛵 Delivery partner ${deliveryBoyName} accepted order • Heading to pickup hub (${pickupTitle})`;
-    if (trackingStage === 3) return `📍 Delivery partner ${deliveryBoyName} reached pickup hub • Inspecting gadget with hub team`;
-    if (trackingStage === 4) return `🚚 Out for delivery! ${deliveryBoyName} picked up gadget • Riding to your doorstep`;
-    if (trackingStage === 5) return `🎉 Delivery partner ${deliveryBoyName} has arrived at your doorstep • Ready for inspection & handover`;
-    if (trackingStage >= 6) return `✅ Order delivered & active rental • Handover verified`;
-    return `📦 Order confirmed • Assigned to delivery partner ${deliveryBoyName}`;
+    if (trackingStage === 2) return `Rider ${deliveryBoyName} accepted order • Heading to pickup hub (${pickupTitle})`;
+    if (trackingStage === 3) return `Rider ${deliveryBoyName} arrived at pickup hub • Inspecting equipment`;
+    if (trackingStage === 4) return `Out for delivery • Rider on EV Scooter riding to your doorstep`;
+    if (trackingStage === 5) return `Rider ${deliveryBoyName} arrived at your doorstep • Ready for handover`;
+    if (trackingStage >= 6) return `Delivered & active rental • Handover verified`;
+    return `Delivery route • Powerpet Central Hub to your doorstep`;
   };
 
-  const getStageBadgeInfo = () => {
-    if (trackingStage === 2) {
-      return {
-        label: "Stage: Heading to Pickup Hub",
-        desc: "Rider is en route to the store to collect your reserved gadget.",
-        icon: "ri-riding-line",
-        color: "#d97706",
-        bgColor: "#fef3c7",
-      };
-    }
-    if (trackingStage === 3) {
-      return {
-        label: "Stage: At Pickup Location",
-        desc: "Rider has reached the store and is inspecting device quality & accessories.",
-        icon: "ri-store-2-fill",
-        color: "#b45309",
-        bgColor: "#fef3c7",
-      };
-    }
-    if (trackingStage === 4) {
-      return {
-        label: "Stage: Out for Local Delivery",
-        desc: "Rider is actively on the road between the pickup hub and your doorstep.",
-        icon: "ri-truck-fill",
-        color: "#1d4ed8",
-        bgColor: "#eff6ff",
-      };
-    }
-    if (trackingStage === 5) {
-      return {
-        label: "Stage: Arrived at Doorstep",
-        desc: "Rider has reached your address. Please inspect the gadget upon handover.",
-        icon: "ri-map-pin-user-fill",
-        color: "#059669",
-        bgColor: "#ecfdf5",
-      };
-    }
-    if (trackingStage >= 6) {
-      return {
-        label: "Stage: Delivered & Handed Over",
-        desc: "Direct handover complete. Rental is active.",
-        icon: "ri-shield-check-fill",
-        color: "#15803d",
-        bgColor: "#f0fdf4",
-      };
-    }
-    return {
-      label: "Stage: Order Assigned",
-      desc: "Delivery partner assigned. Preparing for dispatch.",
-      icon: "ri-time-line",
-      color: "#475569",
-      bgColor: "#f1f5f9",
-    };
-  };
+  // If customer view, render ONLY the live route map with a clean header
+  if (isCustomerView) {
+    return (
+      <div className="gm-route-container">
+        {/* Minimal Customer Header: Live status + Open in Maps */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "8px",
+            flexWrap: "wrap",
+            gap: "8px",
+          }}
+        >
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "7px",
+              fontSize: "12px",
+              fontWeight: "600",
+              color: "#1e40af",
+              backgroundColor: "#eff6ff",
+              padding: "6px 12px",
+              borderRadius: "6px",
+              border: "1px solid #bfdbfe",
+            }}
+          >
+            <span className="gm-live-dot" style={{ width: "7px", height: "7px", backgroundColor: "#2563eb" }}></span>
+            <span>{getLiveLocationText()}</span>
+          </div>
 
-  const stageBadge = getStageBadgeInfo();
+          <a
+            href={currentExternalNavUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gm-btn-directions"
+            style={{ padding: "6px 12px", fontSize: "11.5px" }}
+          >
+            <i className="ri-external-link-line"></i>
+            <span>Open in Google Maps</span>
+          </a>
+        </div>
 
+        {/* Embedded Google Map Frame: Customer sees ONLY the route */}
+        <div className="gm-frame-wrap" style={{ height }}>
+          <iframe
+            title="Google Maps Route"
+            src={currentEmbedUrl}
+            className="gm-iframe"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div className="gm-brand-tag">
+            <i className="ri-google-fill"></i>
+            <span>Google Maps Route</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Admin / Staff View (only when showCards is explicitly enabled)
   return (
     <div className="gm-route-container">
       {/* Cards: Pickup Location, Delivery Boy Details & Delivery Destination */}
@@ -271,128 +279,33 @@ export default function GoogleMapsRouteViewer({
         </div>
       )}
 
-      {/* Live Route Location Banner */}
-      <div
-        style={{
-          backgroundColor: stageBadge.bgColor,
-          border: `1px solid ${stageBadge.color}30`,
-          borderRadius: "8px",
-          padding: "10px 14px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: "8px",
-          fontSize: "12.5px",
-          color: stageBadge.color,
-          fontWeight: "600",
-          marginBottom: "8px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <i className={stageBadge.icon} style={{ fontSize: "16px" }}></i>
-          <div>
-            <div>{getLiveLocationText()}</div>
-            <div style={{ fontSize: "11px", fontWeight: "500", opacity: 0.9 }}>{stageBadge.desc}</div>
-          </div>
-        </div>
-        <span
-          style={{
-            fontSize: "11px",
-            padding: "2px 8px",
-            borderRadius: "4px",
-            backgroundColor: "#ffffff",
-            border: `1px solid ${stageBadge.color}40`,
-            color: stageBadge.color,
-            fontWeight: "700",
-          }}
-        >
-          {stageBadge.label}
-        </span>
-      </div>
-
       {/* Google Maps Controls Toolbar */}
       <div className="gm-toolbar">
         <div className="gm-tabs">
-          {isCustomerView ? (
-            /* Customer View: Highlights where the delivery guy currently is on route */
-            <>
-              {trackingStage === 2 || trackingStage === 3 ? (
-                <button
-                  type="button"
-                  className={`gm-tab ${activeTab === "pickup" ? "active" : ""}`}
-                  onClick={() => setActiveTab("pickup")}
-                >
-                  <i className="ri-store-2-fill"></i>
-                  <span>Rider at Pickup Location</span>
-                </button>
-              ) : trackingStage === 4 ? (
-                <button
-                  type="button"
-                  className={`gm-tab ${activeTab === "route" ? "active" : ""}`}
-                  onClick={() => setActiveTab("route")}
-                >
-                  <i className="ri-truck-fill"></i>
-                  <span>Live Delivery Route to You</span>
-                </button>
-              ) : trackingStage >= 5 ? (
-                <button
-                  type="button"
-                  className={`gm-tab ${activeTab === "delivery" ? "active" : ""}`}
-                  onClick={() => setActiveTab("delivery")}
-                >
-                  <i className="ri-map-pin-user-fill"></i>
-                  <span>Rider at Your Doorstep</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className={`gm-tab ${activeTab === "pickup" ? "active" : ""}`}
-                  onClick={() => setActiveTab("pickup")}
-                >
-                  <i className="ri-store-2-line"></i>
-                  <span>Pickup Hub</span>
-                </button>
-              )}
-
-              <button
-                type="button"
-                className={`gm-tab ${activeTab === "route" && trackingStage !== 4 ? "active" : ""}`}
-                onClick={() => setActiveTab(activeTab === "route" ? getStageTab(trackingStage) : "route")}
-              >
-                <i className="ri-map-2-line"></i>
-                <span>{activeTab === "route" ? "Back to Rider Location" : "Overview Route"}</span>
-              </button>
-            </>
-          ) : (
-            /* Standard Admin/Staff View */
-            <>
-              <button
-                type="button"
-                className={`gm-tab ${activeTab === "route" ? "active" : ""}`}
-                onClick={() => setActiveTab("route")}
-              >
-                <i className="ri-route-line"></i>
-                <span>Google Maps Route</span>
-              </button>
-              <button
-                type="button"
-                className={`gm-tab ${activeTab === "delivery" ? "active" : ""}`}
-                onClick={() => setActiveTab("delivery")}
-              >
-                <i className="ri-map-pin-user-line"></i>
-                <span>Delivery Destination</span>
-              </button>
-              <button
-                type="button"
-                className={`gm-tab ${activeTab === "pickup" ? "active" : ""}`}
-                onClick={() => setActiveTab("pickup")}
-              >
-                <i className="ri-store-2-line"></i>
-                <span>Pickup Hub</span>
-              </button>
-            </>
-          )}
+          <button
+            type="button"
+            className={`gm-tab ${activeTab === "route" ? "active" : ""}`}
+            onClick={() => setActiveTab("route")}
+          >
+            <i className="ri-route-line"></i>
+            <span>Google Maps Route</span>
+          </button>
+          <button
+            type="button"
+            className={`gm-tab ${activeTab === "delivery" ? "active" : ""}`}
+            onClick={() => setActiveTab("delivery")}
+          >
+            <i className="ri-map-pin-user-line"></i>
+            <span>Delivery Destination</span>
+          </button>
+          <button
+            type="button"
+            className={`gm-tab ${activeTab === "pickup" ? "active" : ""}`}
+            onClick={() => setActiveTab("pickup")}
+          >
+            <i className="ri-store-2-line"></i>
+            <span>Pickup Hub</span>
+          </button>
         </div>
 
         <a
@@ -402,13 +315,7 @@ export default function GoogleMapsRouteViewer({
           className="gm-btn-directions"
         >
           <i className="ri-navigation-fill"></i>
-          <span>
-            {trackingStage === 2 || trackingStage === 3
-              ? "View Pickup Hub on Google Maps"
-              : trackingStage === 4
-              ? "Track Live Route on Google Maps"
-              : "Open in Google Maps"}
-          </span>
+          <span>Open in Google Maps</span>
         </a>
       </div>
 
@@ -424,17 +331,7 @@ export default function GoogleMapsRouteViewer({
         />
         <div className="gm-brand-tag">
           <i className="ri-google-fill"></i>
-          <span>
-            {trackingStage === 2
-              ? `Delivery Partner ${deliveryBoyName} • Heading to Pickup`
-              : trackingStage === 3
-              ? `Delivery Partner ${deliveryBoyName} • At Pickup Location`
-              : trackingStage === 4
-              ? `Delivery Partner ${deliveryBoyName} • Out for Delivery`
-              : trackingStage === 5
-              ? `Delivery Partner ${deliveryBoyName} • At Your Doorstep`
-              : `Google Maps • Delivery Partner ${deliveryBoyName}`}
-          </span>
+          <span>Google Maps Active</span>
         </div>
       </div>
     </div>
